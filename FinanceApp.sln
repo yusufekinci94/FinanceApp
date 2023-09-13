@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceApp.Entities", "FinanceApp.Entities\FinanceApp.Entities.csproj", "{975F04B4-7B16-4E4C-91BE-B6432B010A34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceApp.DAL", "FinanceApp.DAL\FinanceApp.DAL.csproj", "{4D7C4ED0-6493-404C-9D6D-6F11ECD10FF0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{975F04B4-7B16-4E4C-91BE-B6432B010A34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{975F04B4-7B16-4E4C-91BE-B6432B010A34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{975F04B4-7B16-4E4C-91BE-B6432B010A34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{975F04B4-7B16-4E4C-91BE-B6432B010A34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D7C4ED0-6493-404C-9D6D-6F11ECD10FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7C4ED0-6493-404C-9D6D-6F11ECD10FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7C4ED0-6493-404C-9D6D-6F11ECD10FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D7C4ED0-6493-404C-9D6D-6F11ECD10FF0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {930B1998-0553-4E9B-8456-4A9464AEC894}
+	EndGlobalSection
+EndGlobal
