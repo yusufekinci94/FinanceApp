@@ -1,6 +1,15 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model FinanceApp.MVC.Models.EntryModel
+<h3> Enter Your Action</h3>
+@using (Html.BeginForm()){
+	@Html.ValidationSummary()
+	{
+		<p>Entry Name:@Html.TextBoxFor(x=>x.name)</p>
+		<p>Entry Amount:@Html.TextBoxFor(x=>x.Amount)</p>
+		<p>Choose the Type of Entry: @Html.DropDownListFor(x=>x.TipId,new [] {
+			new SelectListItem(){Text ="Income",Value="1"},
+			new SelectListItem(){Text ="Outgoing",Value="2"}
+
+			},"Please Choose an Option")</p>
+	}
+	<input type="submit" value="Save">
 }
-<h2> PARTIAL VIEW</h2>
