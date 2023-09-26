@@ -40,18 +40,29 @@ namespace FinanceApp.MVC.Controllers
 			return View(registerDTO);
 		}
 
-		//[HttpPost]
-		//public async Task<IActionResult> Register(RegisterDTO registerDTO)
-		//{
-		//	if(registerDTO.Password != registerDTO.PasswordRepeat) 
-		//	{
-		//		return RedirectToAction("Register");
-		//	}
-		//	else
-		//	{
-
-		//	}
-		//}
+		[HttpPost]
+		public async Task<IActionResult> Register(RegisterDTO registerDTO)
+		{
+			if (!ModelState.IsValid)
+			{
+				return RedirectToAction("Register");
+			}
+			else
+			{
+				AppUser myUser = new AppUser
+				{
+					UserName = registerDTO.Username,
+					Email = registerDTO.Email,
+					PhoneNumber = registerDTO.PhoneNumber,
+				};
+				IdentityResult result = await userManager.CreateAsync(myUser,registerDTO.Password);
+				if(result.Succeeded)
+				{
+					return RedirectToAction("Login");
+				}
+			}
+			return View();
+		}
 
 
 
