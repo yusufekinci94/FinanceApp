@@ -35,21 +35,22 @@ namespace FinanceApp.MVC
 
             }).AddPasswordValidator<CustomPasswordValidation>().AddErrorDescriber<CustomIdentityErrorDescriber>().AddUserValidator<CustomUserValidation>().AddEntityFrameworkStores<SqlDbContext>(); ;
 
-            builder.Services.ConfigureApplicationCookie(c =>
-            {
-                c.LoginPath = new PathString("/Login/Login"); //// ASKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
-                c.Cookie = new CookieBuilder
-                {
-                    Name = "AspNetCoreIdentityExampleCookie",
-                    HttpOnly = false,
-                    Expiration = TimeSpan.FromMinutes(2),
-                    SameSite = SameSiteMode.Lax,
-                    SecurePolicy = CookieSecurePolicy.Always
+            //builder.Services.ConfigureApplicationCookie(c =>
+            //{
+            //    c.LoginPath = new PathString("/Login/Login"); //// ASKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+            //    c.Cookie = new CookieBuilder
+            //    {
+            //        Name = "AspNetCoreIdentityExampleCookie",
+            //        HttpOnly = false,
+            //        Expiration = TimeSpan.FromMinutes(2),
+            //        SameSite = SameSiteMode.Lax,
+            //        SecurePolicy = CookieSecurePolicy.Always
                    
-                };
-                c.SlidingExpiration = true;
-                c.ExpireTimeSpan = TimeSpan.FromMinutes(2);
-            });
+            //    };
+            //    c.Cookie.Expiration=TimeSpan.FromMinutes(2);
+            //    c.SlidingExpiration = true;
+            //    c.ExpireTimeSpan = TimeSpan.FromMinutes(2);
+            //});
 
             var app = builder.Build();
 
