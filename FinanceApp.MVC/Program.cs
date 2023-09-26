@@ -42,8 +42,10 @@ namespace FinanceApp.MVC
                 {
                     Name = "AspNetCoreIdentityExampleCookie",
                     HttpOnly = false,
+                    Expiration = TimeSpan.FromMinutes(2),
                     SameSite = SameSiteMode.Lax,
                     SecurePolicy = CookieSecurePolicy.Always
+                   
                 };
                 c.SlidingExpiration = true;
                 c.ExpireTimeSpan = TimeSpan.FromMinutes(2);

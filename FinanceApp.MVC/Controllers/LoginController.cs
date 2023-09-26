@@ -34,13 +34,35 @@ namespace FinanceApp.MVC.Controllers
 			if (ModelState.IsValid)
 			{
 				AppUser user = await userManager.FindByEmailAsync(loginDTO.Email);
-				if(user != null)
+				if (user != null)
 				{
 					await signInManager.SignOutAsync();
-					Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user,loginDTO.Password,loginDTO.Persistent,loginDTO.Lock) ;
+					Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user, loginDTO.Password, loginDTO.Persistent, loginDTO.Lock);
 					if (result.Succeeded)
-						return RedirectToAction("Index","Home"); // BURAYA NE YAPILABİLİR BİR SOR
-					
+					{
+						await userManager.ResetAccessFailedCountAsync(user);
+						return RedirectToAction("Index", "Home");// BURAYA NE YAPILABİLİR BİR SOR
+					}
+					else
+					{
+						await userManager.AccessFailedAsync(user); //Eğer ki başarısız bir account girişi söz konusu ise AccessFailedCount kolonundaki değer +1 arttırılacaktır. 
+
+						int failcount = await userManager.GetAccessFailedCountAsync(user); //Kullanıcının yapmış olduğu başarısız giriş deneme adedini alıyoruz.
+						if (failcount == 3)
+						{
+							await userManager.SetLockoutEndDateAsync(user, new DateTimeOffset(DateTime.Now.AddMinutes(1))); //Eğer ki başarısız giriş denemesi 3'ü bulduysa ilgili kullanıcının hesabını kilitliyoruz.
+							ModelState.AddModelError("Locked", "Art arda 3 başarısız giriş denemesi yaptığınızdan dolayı hesabınız 1 dk kitlenmiştir.");
+						}
+						else
+						{
+							if (result.IsLockedOut)
+								ModelState.AddModelError("Locked", "Art arda 3 başarısız giriş denemesi yaptığınızdan dolayı hesabınız 1 dk kilitlenmiştir.");
+							else
+								ModelState.AddModelError("NotUser2", "E-posta veya şifre yanlış.");
+						}
+
+
+					}
 				}
 				else
 				{
