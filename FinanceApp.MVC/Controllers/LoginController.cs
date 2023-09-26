@@ -28,20 +28,32 @@ namespace FinanceApp.MVC.Controllers
 			LoginDTO loginDTO = new LoginDTO();
 			return View(loginDTO);
 		}
-		//[HttpPost]
-		//public async Task<IActionResult> Login(LoginDTO loginDTO)
-		//{
-		//	if (!ModelState.IsValid)
-		//	{
-		//		return RedirectToAction("Register");
-		//	}
-		//	else
-		//	{
-								
-		//	}
+		[HttpPost]
+		public async Task<IActionResult> Login(LoginDTO loginDTO)
+		{
+			if (ModelState.IsValid)
+			{
+				AppUser user = await userManager.FindByEmailAsync(loginDTO.Email);
+				if(user != null)
+				{
+					await signInManager.SignOutAsync();
+					Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user,loginDTO.Password,loginDTO.Persistent,loginDTO.Lock) ;
+					if (result.Succeeded)
+						return RedirectToAction("Index","Home"); // BURAYA NE YAPILABİLİR BİR SOR
+					
+				}
+				else
+				{
+					ModelState.AddModelError("NotUser", "There is not a username like this");
+					ModelState.AddModelError("NotUser2", "Email or Password is incorrect");
+				}
+
+			}
+			return View(loginDTO);
+			
 
 
-		//}
+		}
 		[HttpGet]
 		public async Task<IActionResult> Register()
 		{
@@ -78,7 +90,11 @@ namespace FinanceApp.MVC.Controllers
 		}
 
 
-
+		public async Task<IActionResult> Logout()
+		{
+			await signInManager.SignOutAsync();
+			return RedirectToAction("Index");
+		}
 
 
 	}	
