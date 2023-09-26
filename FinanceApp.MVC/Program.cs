@@ -1,5 +1,6 @@
 using FinanceApp.DAL.Context;
 using FinanceApp.Entities.Concrete;
+using FinanceApp.MVC.CustomValidations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,7 @@ namespace FinanceApp.MVC
                 options.Lockout.MaxFailedAccessAttempts = 5;
 
 
-            }).AddEntityFrameworkStores<SqlDbContext>(); ;
+            }).AddPasswordValidator<CustomPasswordValidation>().AddErrorDescriber<CustomIdentityErrorDescriber>().AddUserValidator<CustomUserValidation>().AddEntityFrameworkStores<SqlDbContext>(); ;
 
             var app = builder.Build();
 

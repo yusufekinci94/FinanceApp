@@ -31,7 +31,16 @@ namespace FinanceApp.MVC.Controllers
 		//[HttpPost]
 		//public async Task<IActionResult> Login(LoginDTO loginDTO)
 		//{
-			
+		//	if (!ModelState.IsValid)
+		//	{
+		//		return RedirectToAction("Register");
+		//	}
+		//	else
+		//	{
+								
+		//	}
+
+
 		//}
 		[HttpGet]
 		public async Task<IActionResult> Register()
@@ -59,6 +68,10 @@ namespace FinanceApp.MVC.Controllers
 				if(result.Succeeded)
 				{
 					return RedirectToAction("Login");
+				}
+				else
+				{
+					result.Errors.ToList().ForEach(error => ModelState.AddModelError(error.Code, error.Description));
 				}
 			}
 			return View();

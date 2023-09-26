@@ -9,14 +9,14 @@ namespace FinanceApp.MVC.Models.DTOs
         public string Email { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Password Required")]
-        [MinLength(3, ErrorMessage = "Password Minimum 3 Characters")]
+        [MinLength(3, ErrorMessage = "Password Minimum 3 Characters")] //SHOULD I DELETE HERE ?
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [Compare("Password",ErrorMessage ="Passwords Must Match")]
 		public string PasswordRepeat { get; set; }
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Username Required")]
-        [MinLength(3,ErrorMessage = "Username Minimum 3 Characters")]
-        [DataType(DataType.Text)]
+        [MinLength(3,ErrorMessage = "Username Minimum 3 Characters")] //SHOULD I DELETE HERE ?
+		[DataType(DataType.Text)]
         public string Username { get; set; }
         
         
