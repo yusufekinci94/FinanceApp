@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FinanceApp.DAL.Repositories.Concrete
 {
-    public class TipRepository : BaseRepository<Tip>, ITipRepository
-    {
+    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
+	{
     }
 }

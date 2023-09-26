@@ -1,0 +1,13 @@
+﻿@model LoginDTO
+@using (Html.BeginForm())
+{
+	@Html.ValidationSummary()
+	{
+		<p>Enter Your E-mail:@Html.TextBoxFor(x=>x.Email)</p>
+		<p>Enter Your Password:@Html.PasswordFor(x=>x.Password)</p>
+		<p>
+			Remember Me @Html.CheckBoxFor(x=>x.RememberMe)
+		</p>
+	}
+	<input type="submit" value="Login" class="btn btn-success">
+}

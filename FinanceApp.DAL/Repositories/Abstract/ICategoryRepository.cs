@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinanceApp.BL.Abstract
+namespace FinanceApp.DAL.Repositories.Abstract
 {
-    public interface ITipManager:IBaseManager<Tip>
+   
+    public interface ICategoryRepository : IBaseRepository<Category>
     {
     }
 }

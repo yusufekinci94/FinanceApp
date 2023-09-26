@@ -7,14 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FinanceApp.Entities.Concrete;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace FinanceApp.DAL.Context
 {
-    public class SqlDbContext : DbContext
+    public class SqlDbContext : IdentityDbContext<AppUser,IdentityRole,string>
     {
         public DbSet<Entry> Entries { get; set; }
-        public DbSet<Tip> Tips { get; set; }
-        public DbSet<User> Users { get; set; }
+      
+       
         public SqlDbContext()
         {
         }
@@ -23,7 +25,7 @@ namespace FinanceApp.DAL.Context
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server = (localdb)\MSSQLLocalDB; Integrated Security = true;Trust Server Certificate=True");
+            optionsBuilder.UseSqlServer(@"Server = (localdb)\MSSQLLocalDB;Database=FinansDb; Integrated Security = true;Trust Server Certificate=True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

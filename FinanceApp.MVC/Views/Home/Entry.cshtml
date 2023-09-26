@@ -1,11 +1,12 @@
 ﻿@model FinanceApp.MVC.Models.EntryModel
+<div class="bg-success">
 <h3> Enter Your Action</h3>
 @using (Html.BeginForm()){
 	@Html.ValidationSummary()
 	{
 		<p>Entry Name:@Html.TextBoxFor(x=>x.name)</p>
 		<p>Entry Amount:@Html.TextBoxFor(x=>x.Amount)</p>
-		<p>Choose the Type of Entry: @Html.DropDownListFor(x=>x.TipId,new [] {
+		<p>Choose the Type of Entry: @Html.DropDownListFor(x=>x.Type,new [] {
 			new SelectListItem(){Text ="Income",Value="1"},
 			new SelectListItem(){Text ="Outgoing",Value="2"}
 
@@ -13,3 +14,4 @@
 	}
 	<input type="submit" value="Save" class="btn btn-danger">
 }
+</div>

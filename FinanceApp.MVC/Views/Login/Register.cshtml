@@ -1,0 +1,14 @@
+﻿@model RegisterDTO
+@using (Html.BeginForm())
+{
+	@Html.ValidationSummary()
+	{
+		<p>Enter Your Username:@Html.TextBoxFor(x=>x.Username)</p>
+		<p>Enter Your E-mail:@Html.TextBoxFor(x=>x.Email)</p>
+		<p>Enter Your Password:@Html.PasswordFor(x=>x.Password)</p>
+		<p>Enter Your Password Again:@Html.PasswordFor(x=>x.PasswordRepeat)</p>
+		<p>Enter Your Phone Number:@Html.TextBoxFor(x=>x.PhoneNumber)</p>
+		
+	}
+	<input type="submit" value="Register" class="btn btn-success">
+}

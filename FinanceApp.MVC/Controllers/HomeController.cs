@@ -32,5 +32,11 @@ namespace FinanceApp.MVC.Controllers
         {
             return PartialView();
         }
+        [HttpPost]
+        public IActionResult Entry(EntryModel m)
+        {
+              
+            return PartialView();
+        }
     }
 }

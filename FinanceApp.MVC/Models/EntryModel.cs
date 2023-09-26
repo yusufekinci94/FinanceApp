@@ -4,8 +4,8 @@
     {
         public string? name { get; set; }
         public double Amount { get; set; }
-        public DateTime Month { get; set; } 
-        public int TipId { get; set; }
+        public int Month { get; set; } = DateTime.Now.Month;
+        public string Type { get; set; }
         public int UserId { get; set; }
     }
 }

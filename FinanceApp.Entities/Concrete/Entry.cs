@@ -9,14 +9,19 @@ namespace FinanceApp.Entities.Concrete
 {
     public class Entry : BaseEntity
     {
-        public string? name { get; set; }
+        public string Description { get; set; }
         public double Amount { get; set; }
-        public DateTime Month { get; set; }
-        public int TipId { get; set; }
-        public Tip Tip { get; set; }
-        public int UserId { get; set; }
-        public User User { get; set; }
-        
+     
+        public  Tip Type { get; set; }
+		public string AppUserId { get; set; }
+		public AppUser User { get; set; }
+
+		public ICollection<Category>? Categories { get; set; }
+        public Entry()
+        {
+            Categories = new List<Category>();
+        }
+
 
     }
 }

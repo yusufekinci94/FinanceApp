@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace FinanceApp.Entities.Concrete
 {
-    public class Tip : BaseEntity
+    public enum Tip :byte
     {
-        public string? name { get; set; }
-        public ICollection<Entry> entries { get; set; }
+       Giris=1,
+       Cikis
+
     }
 }
