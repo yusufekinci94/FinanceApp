@@ -41,8 +41,10 @@ namespace FinanceApp.MVC.Controllers
 					if (result.Succeeded)
 					{
 						await userManager.ResetAccessFailedCountAsync(user);
-						return RedirectToAction("Index", "Home");// BURAYA NE YAPILABİLİR BİR SOR
-					}
+						//return RedirectToAction("Index", "Home");// BURAYA NE YAPILABİLİR BİR SOR
+						return RedirectToAction("Index", "Home", new { Area = "Admin" });
+
+                    }
 					else
 					{
 						await userManager.AccessFailedAsync(user); //Eğer ki başarısız bir account girişi söz konusu ise AccessFailedCount kolonundaki değer +1 arttırılacaktır. 
@@ -96,11 +98,15 @@ namespace FinanceApp.MVC.Controllers
 				{
 					UserName = registerDTO.Username,
 					Email = registerDTO.Email,
-					PhoneNumber = registerDTO.PhoneNumber,
+					PhoneNumber = registerDTO.PhoneNumber
+					
 				};
 				IdentityResult result = await userManager.CreateAsync(myUser,registerDTO.Password);
 				if(result.Succeeded)
 				{
+
+					var identityresult = await userManager.AddToRoleAsync(myUser, "Admin");
+
 					return RedirectToAction("Login");
 				}
 				else
@@ -115,7 +121,7 @@ namespace FinanceApp.MVC.Controllers
 		public async Task<IActionResult> Logout()
 		{
 			await signInManager.SignOutAsync();
-			return RedirectToAction("Index");
+			return RedirectToAction("Index","Home");
 		}
 
 

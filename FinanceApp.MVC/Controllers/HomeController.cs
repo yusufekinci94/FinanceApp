@@ -15,6 +15,7 @@ namespace FinanceApp.MVC.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 

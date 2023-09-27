@@ -35,22 +35,25 @@ namespace FinanceApp.MVC
 
             }).AddPasswordValidator<CustomPasswordValidation>().AddErrorDescriber<CustomIdentityErrorDescriber>().AddUserValidator<CustomUserValidation>().AddEntityFrameworkStores<SqlDbContext>(); ;
 
-            //builder.Services.ConfigureApplicationCookie(c =>
-            //{
-            //    c.LoginPath = new PathString("/Login/Login"); //// ASKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
-            //    c.Cookie = new CookieBuilder
-            //    {
-            //        Name = "AspNetCoreIdentityExampleCookie",
-            //        HttpOnly = false,
-            //        Expiration = TimeSpan.FromMinutes(2),
-            //        SameSite = SameSiteMode.Lax,
-            //        SecurePolicy = CookieSecurePolicy.Always
-                   
-            //    };
-            //    c.Cookie.Expiration=TimeSpan.FromMinutes(2);
-            //    c.SlidingExpiration = true;
-            //    c.ExpireTimeSpan = TimeSpan.FromMinutes(2);
-            //});
+            builder.Services.ConfigureApplicationCookie(c =>
+            {
+                c.LoginPath = "/Login/Login"; //// ASKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+                c.Cookie = new CookieBuilder
+                {
+                    Name = "FinansAppCookie",
+                    HttpOnly = false,
+                    SameSite = SameSiteMode.Lax,
+                    SecurePolicy = CookieSecurePolicy.Always
+
+
+
+
+                };
+                c.AccessDeniedPath = "/Login/AcessDenied";
+                c.LogoutPath = "/Login/Logout";
+                c.SlidingExpiration = true;
+                //c.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+            });
 
             var app = builder.Build();
 
@@ -66,9 +69,15 @@ namespace FinanceApp.MVC
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                  name: "areas",
+                  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+            });
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
