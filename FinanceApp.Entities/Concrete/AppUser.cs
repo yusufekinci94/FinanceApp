@@ -15,8 +15,8 @@ namespace FinanceApp.Entities.Concrete
         public double? TotalIncome { get; set; }
         public double? TotalOutgoing { get; set; }
         public double? MonthlyEarning { get; set; }
-        public string? RepeatingOutgoings { get; set; }
         public double? CreditDebt { get; set; }
+        public double? Cash { get; set; }
       
         public ICollection<Entry> Entries { get; set; }
     }

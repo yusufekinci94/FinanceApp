@@ -26,7 +26,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.html">PERSONEL PANEL</a>
+				<a class="navbar-brand" asp-controller="home" asp-action="index" asp-area="admin">PERSONEL PANEL</a>
 			</div>
 			<div style="color: white;
 			padding: 15px 50px 5px 50px;
@@ -50,23 +50,18 @@
 						<a asp-controller="Info" asp-action="Index" ><i class="fa fa-dashboard fa-3x"></i> User Information</a>
 					</li>
 					<li>
-						<a href="ui.html"><i class="fa fa-desktop fa-3x"></i> UI Elements</a>
+						<a asp-controller="entry" asp-action="index" asp-area="admin"><i class="fa fa-table fa-3x"></i> My Entries</a>
 					</li>
 					<li>
-						<a href="tab-panel.html"><i class="fa fa-qrcode fa-3x"></i> Tabs & Panels</a>
+						<a asp-controller="category" asp-action="index" asp-area="admin"><i class="fa fa-sitemap fa-3x"></i> My Categories</a>
 					</li>
 					<li>
-						<a href="chart.html"><i class="fa fa-bar-chart-o fa-3x"></i> Morris Charts</a>
+						<a asp-controller="home" asp-action="index" asp-area=""><i class="fa fa-desktop fa-3x"></i> Go Back To Site</a>
 					</li>
-					<li>
-						<a href="table.html"><i class="fa fa-table fa-3x"></i> Table Examples</a>
-					</li>
-					<li>
-						<a href="form.html"><i class="fa fa-edit fa-3x"></i> Forms </a>
-					</li>
+					
 
 
-					<li>
+					@*<li> //multiselect dropbox can be useable later!!!
 						<a href="#"><i class="fa fa-sitemap fa-3x"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li>
@@ -92,7 +87,7 @@
 
 							</li>
 						</ul>
-					</li>
+					</li>*@
 				</ul>
 
 			</div>

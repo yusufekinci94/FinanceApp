@@ -1,4 +1,5 @@
-﻿using FinanceApp.Entities.Concrete;
+﻿using FinanceApp.BL.Concrete;
+using FinanceApp.Entities.Concrete;
 using FinanceApp.MVC.Models.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ namespace FinanceApp.MVC.Controllers
 		private readonly UserManager<AppUser> userManager;
 		private readonly SignInManager<AppUser> signInManager;
 		private readonly RoleManager<IdentityRole> roleManager;
+		
 
 		public LoginController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager)
         {
@@ -42,7 +44,7 @@ namespace FinanceApp.MVC.Controllers
 					{
 						await userManager.ResetAccessFailedCountAsync(user);
 						//return RedirectToAction("Index", "Home");// BURAYA NE YAPILABİLİR BİR SOR
-						return RedirectToAction("Index", "Home", new { Area = "Admin" });
+						return RedirectToAction("Index", "Home", new { Area = "" });
 
                     }
 					else

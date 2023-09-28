@@ -13,6 +13,7 @@ namespace FinanceApp.Entities.Concrete
         public double Amount { get; set; }
      
         public  Tip Type { get; set; }
+		public TipPara TypeMoney { get; set; }
 		public string AppUserId { get; set; }
 		public AppUser User { get; set; }
 

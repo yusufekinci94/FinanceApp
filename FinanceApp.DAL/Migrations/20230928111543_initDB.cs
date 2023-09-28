@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FinanceApp.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class initDb : Migration
+    public partial class initDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,8 +34,8 @@ namespace FinanceApp.DAL.Migrations
                     TotalIncome = table.Column<double>(type: "float", nullable: true),
                     TotalOutgoing = table.Column<double>(type: "float", nullable: true),
                     MonthlyEarning = table.Column<double>(type: "float", nullable: true),
-                    RepeatingOutgoings = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreditDebt = table.Column<double>(type: "float", nullable: true),
+                    Cash = table.Column<double>(type: "float", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -171,7 +171,7 @@ namespace FinanceApp.DAL.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 9, 21, 13, 49, 43, 743, DateTimeKind.Local).AddTicks(1801)),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 9, 28, 14, 15, 42, 936, DateTimeKind.Local).AddTicks(2084)),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -182,7 +182,7 @@ namespace FinanceApp.DAL.Migrations
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,7 +195,7 @@ namespace FinanceApp.DAL.Migrations
                     Amount = table.Column<double>(type: "float", nullable: false),
                     Type = table.Column<byte>(type: "tinyint", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 9, 21, 13, 49, 43, 743, DateTimeKind.Local).AddTicks(4962)),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 9, 28, 14, 15, 42, 936, DateTimeKind.Local).AddTicks(7195)),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -206,7 +206,7 @@ namespace FinanceApp.DAL.Migrations
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,13 +224,13 @@ namespace FinanceApp.DAL.Migrations
                         column: x => x.CategoriesId,
                         principalTable: "Category",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_CategoryEntry_Entries_EntriesId",
                         column: x => x.EntriesId,
                         principalTable: "Entries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

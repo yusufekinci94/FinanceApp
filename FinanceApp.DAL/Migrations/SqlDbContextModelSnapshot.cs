@@ -48,6 +48,9 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<double?>("Balance")
                         .HasColumnType("float");
 
+                    b.Property<double?>("Cash")
+                        .HasColumnType("float");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -87,9 +90,6 @@ namespace FinanceApp.DAL.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("RepeatingOutgoings")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -135,7 +135,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 9, 21, 13, 49, 43, 743, DateTimeKind.Local).AddTicks(1801));
+                        .HasDefaultValue(new DateTime(2023, 9, 28, 14, 15, 42, 936, DateTimeKind.Local).AddTicks(2084));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -174,7 +174,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 9, 21, 13, 49, 43, 743, DateTimeKind.Local).AddTicks(4962));
+                        .HasDefaultValue(new DateTime(2023, 9, 28, 14, 15, 42, 936, DateTimeKind.Local).AddTicks(7195));
 
                     b.Property<string>("Description")
                         .IsRequired()

@@ -1,17 +1,60 @@
 ﻿@model FinanceApp.MVC.Models.EntryModel
 <div class="bg-success">
 <h3> Enter Your Action</h3>
-@using (Html.BeginForm()){
+
+<form asp-action="Entry">
+	<div>
+		<label asp-for="@Model.name">Entry name</label>
+		<input asp-for="@Model.name" required />
+		<span asp-validation-for="@Model.name"></span>
+	</div>
+	<div>
+		<label asp-for="@Model.Amount">Amount</label>
+		<input asp-for="@Model.Amount" required />
+		<span asp-validation-for="@Model.Amount"></span>
+	</div>
+	<div>
+		Choose the Type of Entry: @Html.DropDownListFor(x=>x.Type,new [] {	new SelectListItem(){Text ="Income",Value="1"}, new SelectListItem(){Text ="Outgoing",Value="2"}}))
+	</div>
+		<div>
+			Choose the Type of Money: @Html.DropDownListFor(x=>x.TypeMoney,new [] {	new SelectListItem(){Text ="Income",Value="1"}, new SelectListItem(){Text ="Outgoing",Value="2"}}))
+		</div>
+		<div>
+			Choose the Category: @Html.DropDownListFor(x=>x.Category,new [] {	new SelectListItem(){Text ="Income",Value="1"}, new SelectListItem(){Text ="Outgoing",Value="2"}}))
+		</div>
+		<input type="submit" value="Save" class="btn btn-danger">
+</form>
+
+
+
+@*
+@using (Html.BeginForm())
+{
 	@Html.ValidationSummary()
 	{
 		<p>Entry Name:@Html.TextBoxFor(x=>x.name)</p>
 		<p>Entry Amount:@Html.TextBoxFor(x=>x.Amount)</p>
-		<p>Choose the Type of Entry: @Html.DropDownListFor(x=>x.Type,new [] {
-			new SelectListItem(){Text ="Income",Value="1"},
-			new SelectListItem(){Text ="Outgoing",Value="2"}
+		<p>
+			Choose the Type of Entry: @Html.DropDownListFor(x=>x.Type,new [] {
+	new SelectListItem(){Text ="Income",Value="1"},
+	new SelectListItem(){Text ="Outgoing",Value="2"}
 
-			},"Please Choose an Option")</p>
+	},"Please Choose an Option")
+		</p>
+		<p>
+			Choose the Type of Balance: @Html.DropDownListFor(x=>x.TypeMoney,new [] {
+	new SelectListItem(){Text ="Cash",Value="1"},
+	new SelectListItem(){Text ="Credit Card",Value="2"}
+
+	},"Please Choose an Option")
+		</p>
+		<p>
+			Choose the Type of Balance: @Html.DropDownListFor(x=>x.Category,new [] {
+	new SelectListItem(){Text ="Cash",Value="1"},
+
+	},"Please Choose a Category")
+		</p>
 	}
 	<input type="submit" value="Save" class="btn btn-danger">
 }
-</div>
+*@
