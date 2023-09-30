@@ -17,7 +17,6 @@ namespace FinanceApp.BL.Concrete
     {
 		private readonly UserManager<AppUser> userManager;
 
-		
 
 		public EntryManager(IEntryRepository repository, UserManager<AppUser> userManager) : base(repository)
         {

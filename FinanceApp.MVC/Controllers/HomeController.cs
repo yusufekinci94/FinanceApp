@@ -15,7 +15,8 @@ namespace FinanceApp.MVC.Controllers
 		private readonly SqlDbContext dbContext;
 		private readonly UserManager<AppUser> userManager;
 		private readonly IMapper mapper;
-		private readonly EntryManager entryManager;
+        private readonly EntryManager entryManager;
+		
 
 		public HomeController(ILogger<HomeController> logger, SqlDbContext dbContext, UserManager<AppUser> userManager,IMapper mapper,EntryManager entryManager)
         {
@@ -23,7 +24,8 @@ namespace FinanceApp.MVC.Controllers
 			this.dbContext = dbContext;
 			this.userManager = userManager;
 			this.mapper = mapper;
-			this.entryManager = entryManager;
+            this.entryManager = entryManager;
+			
 		}
 
         public IActionResult Index()
@@ -52,6 +54,7 @@ namespace FinanceApp.MVC.Controllers
         {
             
             Entities.Concrete.Entry entry = mapper.Map<Entry>(m);
+           
             entry.AppUserId = userManager.GetUserId(this.User);
             //  entry.User = ?
             //    entry.Description = m.name;
