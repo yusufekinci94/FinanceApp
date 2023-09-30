@@ -9,5 +9,6 @@ namespace FinanceApp.BL.Abstract
 {
     public interface IEntryManager:IBaseManager<Entry>
     {
+       
     }
 }
