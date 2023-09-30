@@ -13,8 +13,9 @@ namespace FinanceApp.MVC.Extensions
 		{
 			services.AddScoped<IEntryRepository,EntryRepository>();
 			services.AddScoped<ICategoryRepository,CategoryRepository>();
-			services.AddScoped<EntriModel>();
-			services.AddScoped<EntryModel>();
+			services.AddScoped<EntriModel,EntryModel>();
+			services.AddScoped<EntryModel, EntriModel>();
+			
 			
 
 			return services;

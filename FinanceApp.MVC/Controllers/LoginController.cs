@@ -101,9 +101,12 @@ namespace FinanceApp.MVC.Controllers
 					UserName = registerDTO.Username,
 					Email = registerDTO.Email,
 					PhoneNumber = registerDTO.PhoneNumber
+
+					
 					
 				};
 				IdentityResult result = await userManager.CreateAsync(myUser,registerDTO.Password);
+				
 				if(result.Succeeded)
 				{
 

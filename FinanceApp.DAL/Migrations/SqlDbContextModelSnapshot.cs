@@ -135,7 +135,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 9, 28, 14, 15, 42, 936, DateTimeKind.Local).AddTicks(2084));
+                        .HasDefaultValue(new DateTime(2023, 9, 30, 20, 42, 15, 919, DateTimeKind.Local).AddTicks(6869));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -174,7 +174,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 9, 28, 14, 15, 42, 936, DateTimeKind.Local).AddTicks(7195));
+                        .HasDefaultValue(new DateTime(2023, 9, 30, 20, 42, 15, 919, DateTimeKind.Local).AddTicks(9799));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -182,6 +182,9 @@ namespace FinanceApp.DAL.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<byte>("Type")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("TypeMoney")
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdateDate")

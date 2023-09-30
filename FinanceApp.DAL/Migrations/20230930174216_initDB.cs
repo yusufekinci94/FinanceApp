@@ -171,7 +171,7 @@ namespace FinanceApp.DAL.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 9, 28, 14, 15, 42, 936, DateTimeKind.Local).AddTicks(2084)),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 9, 30, 20, 42, 15, 919, DateTimeKind.Local).AddTicks(6869)),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -194,8 +194,9 @@ namespace FinanceApp.DAL.Migrations
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     Type = table.Column<byte>(type: "tinyint", nullable: false),
+                    TypeMoney = table.Column<byte>(type: "tinyint", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 9, 28, 14, 15, 42, 936, DateTimeKind.Local).AddTicks(7195)),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 9, 30, 20, 42, 15, 919, DateTimeKind.Local).AddTicks(9799)),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>

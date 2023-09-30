@@ -15,16 +15,15 @@ namespace FinanceApp.MVC.Controllers
 		private readonly SqlDbContext dbContext;
 		private readonly UserManager<AppUser> userManager;
 		private readonly IMapper mapper;
-        private readonly EntryManager entryManager;
 		
 
-		public HomeController(ILogger<HomeController> logger, SqlDbContext dbContext, UserManager<AppUser> userManager,IMapper mapper,EntryManager entryManager)
+		public HomeController(ILogger<HomeController> logger, SqlDbContext dbContext, UserManager<AppUser> userManager,IMapper mapper)
         {
             _logger = logger;
 			this.dbContext = dbContext;
 			this.userManager = userManager;
 			this.mapper = mapper;
-            this.entryManager = entryManager;
+            
 			
 		}
 
@@ -62,9 +61,9 @@ namespace FinanceApp.MVC.Controllers
             //    entry.Type = m.Type;
             //    entry.TypeMoney = m.TypeMoney;
             //    entry.Categories = m.Category;
-            //    await dbContext.Entries.AddAsync(entry);
+            await dbContext.Entries.AddAsync(entry);
 
-            entryManager.Create(entry);
+            
             return PartialView();
         }
     }
