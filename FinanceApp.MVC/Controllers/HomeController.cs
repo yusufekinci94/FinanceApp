@@ -44,14 +44,15 @@ namespace FinanceApp.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Entry(EntryModel m)
         {
-            //Entities.Concrete.Entry entry = new Entities.Concrete.Entry();
-            //entry.AppUserId = userManager.GetUserId(this.User);
-            //entry.Description = m.name;
-            //entry.Amount = m.Amount;
-            //entry.Type = m.Type; 
-            //entry.TypeMoney = m.TypeMoney;
-            //entry.Categories = m.Category;
-            //await dbContext.Entries.AddAsync(entry);
+            Entities.Concrete.Entry entry = new Entities.Concrete.Entry();
+            entry.AppUserId = userManager.GetUserId(this.User);
+        //  entry.User = ?
+            entry.Description = m.name;
+            entry.Amount = m.Amount;
+            entry.Type = m.Type;
+            entry.TypeMoney = m.TypeMoney;
+        //  entry.Categories = m.Category;
+            await dbContext.Entries.AddAsync(entry);
             return PartialView();
         }
     }
