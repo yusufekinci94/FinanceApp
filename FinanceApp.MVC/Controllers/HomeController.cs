@@ -1,4 +1,5 @@
-﻿using FinanceApp.BL.Concrete;
+﻿using AutoMapper;
+using FinanceApp.BL.Concrete;
 using FinanceApp.DAL.Context;
 using FinanceApp.Entities.Concrete;
 using FinanceApp.MVC.Models;
@@ -13,12 +14,16 @@ namespace FinanceApp.MVC.Controllers
         private readonly ILogger<HomeController> _logger;
 		private readonly SqlDbContext dbContext;
 		private readonly UserManager<AppUser> userManager;
+		private readonly IMapper mapper;
+		private readonly EntryManager entryManager;
 
-		public HomeController(ILogger<HomeController> logger, SqlDbContext dbContext, UserManager<AppUser> userManager)
+		public HomeController(ILogger<HomeController> logger, SqlDbContext dbContext, UserManager<AppUser> userManager,IMapper mapper,EntryManager entryManager)
         {
             _logger = logger;
 			this.dbContext = dbContext;
 			this.userManager = userManager;
+			this.mapper = mapper;
+			this.entryManager = entryManager;
 		}
 
         public IActionResult Index()
@@ -46,15 +51,17 @@ namespace FinanceApp.MVC.Controllers
         public async Task<IActionResult> Entry(EntryModel m)
         {
             
-            Entities.Concrete.Entry entry = new Entities.Concrete.Entry();
+            Entities.Concrete.Entry entry = mapper.Map<Entry>(m);
             entry.AppUserId = userManager.GetUserId(this.User);
-        //  entry.User = ?
-            entry.Description = m.name;
-            entry.Amount = m.Amount;
-            entry.Type = m.Type;
-            entry.TypeMoney = m.TypeMoney;
-            entry.Categories = m.Category;
-            await dbContext.Entries.AddAsync(entry);
+            //  entry.User = ?
+            //    entry.Description = m.name;
+            //    entry.Amount = m.Amount;
+            //    entry.Type = m.Type;
+            //    entry.TypeMoney = m.TypeMoney;
+            //    entry.Categories = m.Category;
+            //    await dbContext.Entries.AddAsync(entry);
+
+            entryManager.Create(entry);
             return PartialView();
         }
     }

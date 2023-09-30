@@ -17,13 +17,15 @@ namespace FinanceApp.BL.Concrete
     {
 		private readonly UserManager<AppUser> userManager;
 
+		
+
 		public EntryManager(IEntryRepository repository, UserManager<AppUser> userManager) : base(repository)
         {
 			this.userManager = userManager;
 		}
 		
 
-		public virtual async Task<int> EnterAction(EntryModel model, Entry entry)
+		public virtual async Task<int> EnterAction(EntriModel model, Entry entry)
 		{
 
 			entry.Description = model.name;

@@ -1,6 +1,7 @@
 using FinanceApp.DAL.Context;
 using FinanceApp.Entities.Concrete;
 using FinanceApp.MVC.CustomValidations;
+using FinanceApp.MVC.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,8 @@ namespace FinanceApp.MVC
             builder.Services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("FinansDb")));
             //builder.Services.AddDefaultIdentity<AppUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SqlDbContext>();
 
+            builder.Services.AddAutoMapper(typeof(MapsManager));
+
             builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
@@ -34,7 +37,7 @@ namespace FinanceApp.MVC
 
 
             }).AddPasswordValidator<CustomPasswordValidation>().AddErrorDescriber<CustomIdentityErrorDescriber>().AddUserValidator<CustomUserValidation>().AddEntityFrameworkStores<SqlDbContext>(); ;
-
+          
             builder.Services.ConfigureApplicationCookie(c =>
             {
                 c.LoginPath = "/Login/Login"; //// ASKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
@@ -54,7 +57,7 @@ namespace FinanceApp.MVC
                 c.SlidingExpiration = true;
                 //c.ExpireTimeSpan = TimeSpan.FromMinutes(20);
             });
-
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
