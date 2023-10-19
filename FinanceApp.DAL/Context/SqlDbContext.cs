@@ -15,6 +15,7 @@ namespace FinanceApp.DAL.Context
     public class SqlDbContext : IdentityDbContext<AppUser,IdentityRole,string>
     {
         public DbSet<Entry> Entries { get; set; }
+        public DbSet<Category> Categories { get; set; }
       
        
         public SqlDbContext()

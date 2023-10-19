@@ -1,4 +1,5 @@
 ﻿using FinanceApp.Entities.Concrete;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualBasic;
 
 namespace FinanceApp.MVC.Models
@@ -10,7 +11,11 @@ namespace FinanceApp.MVC.Models
         public int Month { get; set; } = DateTime.Now.Month;
         public Tip Type { get; set; }
         public TipPara TypeMoney { get; set; }
-		public ICollection<Category> Category { get; set; }
+		public List<Category> Categories { get; set; }
+
 		public int UserId { get; set; }
-    }
+		
+
+	}
+
 }

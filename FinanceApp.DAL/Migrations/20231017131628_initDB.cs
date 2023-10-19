@@ -163,26 +163,25 @@ namespace FinanceApp.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 9, 30, 20, 42, 15, 919, DateTimeKind.Local).AddTicks(6869)),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 17, 16, 16, 28, 824, DateTimeKind.Local).AddTicks(8986)),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Category_AspNetUsers_AppUserId",
+                        name: "FK_Categories_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -196,7 +195,7 @@ namespace FinanceApp.DAL.Migrations
                     Type = table.Column<byte>(type: "tinyint", nullable: false),
                     TypeMoney = table.Column<byte>(type: "tinyint", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 9, 30, 20, 42, 15, 919, DateTimeKind.Local).AddTicks(9799)),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 17, 16, 16, 28, 825, DateTimeKind.Local).AddTicks(1542)),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -221,9 +220,9 @@ namespace FinanceApp.DAL.Migrations
                 {
                     table.PrimaryKey("PK_CategoryEntry", x => new { x.CategoriesId, x.EntriesId });
                     table.ForeignKey(
-                        name: "FK_CategoryEntry_Category_CategoriesId",
+                        name: "FK_CategoryEntry_Categories_CategoriesId",
                         column: x => x.CategoriesId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -274,8 +273,8 @@ namespace FinanceApp.DAL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Category_AppUserId",
-                table: "Category",
+                name: "IX_Categories_AppUserId",
+                table: "Categories",
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
@@ -314,7 +313,7 @@ namespace FinanceApp.DAL.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Entries");

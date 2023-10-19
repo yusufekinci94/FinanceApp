@@ -1,8 +1,38 @@
-﻿
+﻿@model AppUser
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/new_layout.cshtml";
 }
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Balance:@Model.Balance</h4>
+            </div>
+            <div class="col-md-6">
+                <h4>Total Income:@Model.TotalIncome Total Outgoing:@Model.TotalOutgoing </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Cash:@Model.Cash</h4>
+            </div>
+            <div class="col-md-6">
+                <h4>Credit Debt:@Model.CreditDebt </h4>
+            </div>
+        </div>
+       
+    </div>
+}
 
-<h1>View</h1>
 
+@*<script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
+<script src="_framework/blazor.webassembly.js"></script>
+<script src="js/Chart.js"></script>
+<script src="js/print.js"></script>
+<script src="js/pdf.js"></script>
+<script src="_content/BlazorDateRangePicker/clickAndPositionHandler.js"></script>
+<script src="js/blazorInterop.js"></script>
+<script>navigator.serviceWorker.register('service-worker.js');</script>
+<script src="/_framework/aspnetcore-browser-refresh.js"></script>*@

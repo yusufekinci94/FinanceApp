@@ -1,0 +1,36 @@
+﻿@using FinanceApp.Entities.Concrete;
+@model Category
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h3>Are you sure to delete this category ?</h3>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+    <div class="card-body">
+        <form asp-action="Delete" method="post">
+
+            @*// Burasi Onemli. Unutulursa delete islemi yalan olur.*@
+            <input type="hidden" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.AppUserId" />
+            <div class="mb-3">
+                <label asp-for="@Model.Name">Category Name</label>
+                <input class="form-control" asp-for="@Model.Name" value="@Model.Name">
+
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Description">Category Description </label>
+                <input class="form-control" asp-for="@Model.Description" value="@Model.Description">
+
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">Delete</button>
+            </div>
+        </form>
+    </div>
+</div>

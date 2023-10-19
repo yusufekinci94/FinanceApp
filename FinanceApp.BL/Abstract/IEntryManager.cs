@@ -1,4 +1,4 @@
-﻿using FinanceApp.BL.Models;
+﻿
 using FinanceApp.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,6 @@ namespace FinanceApp.BL.Abstract
 {
     public interface IEntryManager:IBaseManager<Entry>
     {
-        Task<int> EnterAction(EntriModel model, Entry entry);
+        //Task<int> EnterAction(EntriModel model, Entry entry);
     }
 }

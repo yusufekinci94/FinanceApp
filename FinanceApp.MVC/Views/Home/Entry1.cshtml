@@ -1,10 +1,4 @@
-﻿
-@{
-    ViewData["Title"] = "Entry";
-    Layout = "~/Views/Shared/new_layout.cshtml";
-}
-
-@using FinanceApp.BL.Abstract;
+﻿@using FinanceApp.BL.Abstract;
 @using FinanceApp.DAL.Context;
 @using Microsoft.AspNetCore.Identity;
 @model FinanceApp.MVC.Models.EntryModel
@@ -15,7 +9,7 @@
 @{
 	var user = await userManager.GetUserAsync(User);
 	var entries = await entryManager.GetAllInclude(null, e => e.Categories);
-	foreach (var entry in entries)
+	foreach (var entry in entries) 
 	{
 		var str = "";
 	}
@@ -27,27 +21,27 @@
 
 
 <div class="bg-success">
-	<h3> Enter Your Action</h3>
+    <h3> Enter Your Action</h3>
 
-	<form method="post" asp-action="Entry">
-		<div>
-			<label asp-for="@Model.name">Entry name</label>
-			<input asp-for="@Model.name" required />
-			<span asp-validation-for="@Model.name"></span>
-		</div>
-		<div>
-			<label asp-for="@Model.Amount">Amount</label>
-			<input asp-for="@Model.Amount" required />
-			<span asp-validation-for="@Model.Amount"></span>
-		</div>
+    <form method="post" asp-action="Entry">
+        <div>
+            <label asp-for="@Model.name">Entry name</label>
+            <input asp-for="@Model.name" required />
+            <span asp-validation-for="@Model.name"></span>
+        </div>
+        <div>
+            <label asp-for="@Model.Amount">Amount</label>
+            <input asp-for="@Model.Amount" required />
+            <span asp-validation-for="@Model.Amount"></span>
+        </div>
 		@*
-		<div>
-		Choose the Type of Entry: @Html.DropDownListFor(x=>x.Type,new [] {	new SelectListItem(){Text ="Income",Value="1"}, new SelectListItem(){Text ="Outgoing",Value="2"}}))
-		</div>
-		<div>
-		Choose the Type of Money: @Html.DropDownListFor(x=>x.TypeMoney,new [] {	new SelectListItem(){Text ="Income",Value="1"}, new SelectListItem(){Text ="Outgoing",Value="2"}}))
-		</div>
-		*@
+        <div>
+            Choose the Type of Entry: @Html.DropDownListFor(x=>x.Type,new [] {	new SelectListItem(){Text ="Income",Value="1"}, new SelectListItem(){Text ="Outgoing",Value="2"}}))
+        </div>
+        <div>
+            Choose the Type of Money: @Html.DropDownListFor(x=>x.TypeMoney,new [] {	new SelectListItem(){Text ="Income",Value="1"}, new SelectListItem(){Text ="Outgoing",Value="2"}}))
+        </div> 
+       *@ 
 		<select class="form-select" asp-for="@Model.Type">
 			<option selected>Bir tip seçiniz</option>
 			<option value="1">Giriş</option>
@@ -57,12 +51,12 @@
 			<option selected>Bir ödeme şekli seçiniz</option>
 			<option value="1">Nakit</option>
 			<option value="2">Kredi Kartı</option>
-		</select>
+		</select> 
 		<div>
-			<select asp-for="Categories" asp-items="selectListItems" multiple></select>
+		<select asp-for="Categories" asp-items="selectListItems" multiple></select>
 		</div>
-		<input type="submit" value="Save" class="btn btn-danger">
-	</form>
+        <input type="submit" value="Save" class="btn btn-danger">
+    </form>
 </div>
 
 @*
@@ -99,5 +93,3 @@
 	<input type="submit" value="Save" class="btn btn-danger">
 	}
 	*@
-
-

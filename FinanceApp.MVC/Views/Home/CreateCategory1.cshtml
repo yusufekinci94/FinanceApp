@@ -1,0 +1,19 @@
+﻿@model CategoryDTO
+<div class="bg-success">
+	<h3> Enter Your Category</h3>
+
+<form asp-action="CreateCategory">
+	<div>
+		<label asp-for="@Model.Name">Category name</label>
+		<input asp-for="@Model.Name" required />
+		<span asp-validation-for="@Model.Name"></span>
+	</div>
+	<div>
+		<label asp-for="@Model.Description">Category Description</label>
+		<input asp-for="@Model.Description" required />
+		<span asp-validation-for="@Model.Name"></span>
+	</div>
+		<input type="submit" value="Save" class="btn btn-danger">
+	
+</form>
+</div>

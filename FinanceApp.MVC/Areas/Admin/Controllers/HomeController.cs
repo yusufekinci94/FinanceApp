@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FinanceApp.DAL.Context;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceApp.MVC.Areas.Admin.Controllers
@@ -7,8 +8,10 @@ namespace FinanceApp.MVC.Areas.Admin.Controllers
     [Authorize(Roles ="Admin")]
     public class HomeController : Controller
     {
+        
         public IActionResult Index()
         {
+            
             return View();
         }
     }

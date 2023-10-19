@@ -1,0 +1,22 @@
+﻿@model ConfirmModel
+@{
+    Layout = null;
+}
+
+<form asp-action="Confirmation" method="post">
+    <div class="form-group">
+         <input type="hidden" asp-for="confirmCode" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="confirmCodeAgain">Onay Kodu (Tekrar)</label>
+        <input asp-for="confirmCodeAgain" class="form-control" />
+        <span asp-validation-for="confirmCodeAgain" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="hidden" asp-for="AppUserId" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Activate</button>
+</form>

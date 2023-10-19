@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceApp.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20230930174216_initDB")]
+    [Migration("20231017131628_initDB")]
     partial class initDB
     {
         /// <inheritdoc />
@@ -132,13 +132,12 @@ namespace FinanceApp.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AppUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 9, 30, 20, 42, 15, 919, DateTimeKind.Local).AddTicks(6869));
+                        .HasDefaultValue(new DateTime(2023, 10, 17, 16, 16, 28, 824, DateTimeKind.Local).AddTicks(8986));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -156,7 +155,7 @@ namespace FinanceApp.DAL.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("FinanceApp.Entities.Concrete.Entry", b =>
@@ -177,7 +176,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 9, 30, 20, 42, 15, 919, DateTimeKind.Local).AddTicks(9799));
+                        .HasDefaultValue(new DateTime(2023, 10, 17, 16, 16, 28, 825, DateTimeKind.Local).AddTicks(1542));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -352,9 +351,7 @@ namespace FinanceApp.DAL.Migrations
                 {
                     b.HasOne("FinanceApp.Entities.Concrete.AppUser", "User")
                         .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AppUserId");
 
                     b.Navigation("User");
                 });

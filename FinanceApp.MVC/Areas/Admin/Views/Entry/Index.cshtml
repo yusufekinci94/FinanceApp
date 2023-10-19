@@ -1,8 +1,53 @@
-﻿
+﻿@using FinanceApp.Entities.Concrete;
+@model ICollection<Entry>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Entries</h1>
+<a class="btn btn-success" asp-action="Add">Add New Entry</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Entry Amount</th>
+            <th>Entry Description</th>
+            <th>Entry Create Date</th>
+            <th>Entry Type</th>
+            <th>Entry Type of Money</th>
+            <th>Entry Categories</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Amount</td>
+                <td>@item.Description</td>
+                <td>@item.CreateDate</td>
+                <td>@item.Type </td>
+                <td>@item.TypeMoney</td>
+                <td></td>
+              @*  <td>
+                @foreach(var category in item.Categories)
+                {
+                    @category.Name
+                        if (category != item.Categories.Last())
+                        {
+                            @:", "
+                        }
+                }
+                </td>*@
+                <td>
+                  @*  <a class="btn btn-success" asp-route-id="@item.Id" asp-action="Update">Update</a>*@
+                    <a class="btn btn-danger" asp-route-id="@item.Id" asp-action="Delete">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
 

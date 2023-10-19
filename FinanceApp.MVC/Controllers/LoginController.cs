@@ -1,9 +1,14 @@
 ﻿using FinanceApp.BL.Concrete;
+using FinanceApp.DAL.Context;
 using FinanceApp.Entities.Concrete;
+using FinanceApp.MVC.Models;
 using FinanceApp.MVC.Models.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Eventing.Reader;
+using System.Net;
+using System.Net.Mail;
 
 namespace FinanceApp.MVC.Controllers
 {
@@ -12,13 +17,16 @@ namespace FinanceApp.MVC.Controllers
 		private readonly UserManager<AppUser> userManager;
 		private readonly SignInManager<AppUser> signInManager;
 		private readonly RoleManager<IdentityRole> roleManager;
-		
+        private readonly SqlDbContext dbContext;
 
-		public LoginController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager)
+
+
+        public LoginController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,SqlDbContext sqlDbContext,RoleManager<IdentityRole> roleManager)
         {
 			this.userManager = userManager;
 			this.signInManager = signInManager;
 			this.roleManager = roleManager;
+			this.dbContext = sqlDbContext;
 		}
         public IActionResult Index()
 		{
@@ -100,8 +108,14 @@ namespace FinanceApp.MVC.Controllers
 				{
 					UserName = registerDTO.Username,
 					Email = registerDTO.Email,
-					PhoneNumber = registerDTO.PhoneNumber
-
+					PhoneNumber = registerDTO.PhoneNumber,
+					Balance=0,
+					Cash=0,
+					CreditDebt=0,
+					TotalIncome=0,
+					TotalOutgoing=0,
+					MonthlyEarning=0
+					
 					
 					
 				};
@@ -111,8 +125,9 @@ namespace FinanceApp.MVC.Controllers
 				{
 
 					var identityresult = await userManager.AddToRoleAsync(myUser, "Admin");
+					
 
-					return RedirectToAction("Login");
+					return RedirectToAction("Confirmation",myUser);
 				}
 				else
 				{
@@ -121,9 +136,49 @@ namespace FinanceApp.MVC.Controllers
 			}
 			return View();
 		}
+        [HttpGet]
+        public async Task<IActionResult> Confirmation(AppUser appUser)
+        {
+            Random random = new Random();
+            int confirmCode = random.Next(100000, 1000000);
+			ConfirmModel confirmModel = new ConfirmModel();
+			confirmModel.confirmCode = confirmCode;
+			confirmModel.AppUserId = appUser.Id;
+            var smtpClient = new SmtpClient("smtp.office365.com")
+            {
+                Port = 587,
+                UseDefaultCredentials = false,
+                EnableSsl = true,
+            };
+            smtpClient.Credentials = new NetworkCredential("financeappacunmedya@hotmail.com", "yusufekinci94");
+			var mailMessage = new MailMessage
+			{
+				From = new MailAddress("financeappacunmedya@hotmail.com"),
+				Subject = "Confirmation Email",
+				Body = "Confirmation Code: " + confirmCode,
+                IsBodyHtml = true,
+            };
+			mailMessage.To.Add(appUser.Email);
+			smtpClient.Send(mailMessage);
+            return View(confirmModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Confirmation(ConfirmModel confirmModel)
+        {
+			if (confirmModel.confirmCode == confirmModel.confirmCodeAgain)
+			{
+				var user = userManager.Users.FirstOrDefault(x => x.Id == confirmModel.AppUserId);
+				if (user != null)
+				{
+					user.EmailConfirmed = true;
+				}
+				dbContext.SaveChanges();
+				return RedirectToAction("Login");
+			}
+            return View(confirmModel);
+        }
 
-
-		public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout()
 		{
 			await signInManager.SignOutAsync();
 			return RedirectToAction("Index","Home");

@@ -11,8 +11,8 @@ namespace FinanceApp.Entities.Concrete
 	{
         public string Name { get; set; }
 		public string? Description { get; set; }
-		public string AppUserId { get; set; }
-		public AppUser User { get; set; }
+		public string? AppUserId { get; set; }
+		public AppUser? User { get; set; }
 		public ICollection<Entry>? Entries { get; set; }
     }
 }

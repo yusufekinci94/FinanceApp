@@ -1,4 +1,8 @@
+using FinanceApp.BL.Abstract;
+using FinanceApp.BL.Concrete;
 using FinanceApp.DAL.Context;
+using FinanceApp.DAL.Repositories.Abstract;
+using FinanceApp.DAL.Repositories.Concrete;
 using FinanceApp.Entities.Concrete;
 using FinanceApp.MVC.CustomValidations;
 using FinanceApp.MVC.Extensions;
@@ -21,8 +25,13 @@ namespace FinanceApp.MVC
             //builder.Services.AddDefaultIdentity<AppUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SqlDbContext>();
 
             builder.Services.AddAutoMapper(typeof(MapsManager));
+            builder.Services.AddScoped<ICategoryManager, CategoryManager>();
+			builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+			builder.Services.AddScoped<IEntryManager, EntryManager>();
+			builder.Services.AddScoped<IEntryRepository, EntryRepository>();
 
-            builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+
+			builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;

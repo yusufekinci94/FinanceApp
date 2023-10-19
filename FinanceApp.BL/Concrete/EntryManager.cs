@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FinanceApp.DAL.Repositories.Abstract;
 using FinanceApp.BL.Abstract;
-using FinanceApp.BL.Models;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,16 +24,16 @@ namespace FinanceApp.BL.Concrete
 		}
 		
 
-		public virtual async Task<int> EnterAction(EntriModel model, Entry entry)
-		{
+		//public virtual async Task<int> EnterAction(EntriModel model, Entry entry)
+		//{
 
-			entry.Description = model.name;
-			entry.Amount = model.Amount;
-			entry.Type = model.Type;
-			entry.TypeMoney = model.TypeMoney;
-			entry.Categories = model.Category;
+		//	entry.Description = model.name;
+		//	entry.Amount = model.Amount;
+		//	entry.Type = model.Type;
+		//	entry.TypeMoney = model.TypeMoney;
+		//	entry.Categories = model.Category;
 			
-			return await repository.Create(entry);
-		}
+		//	return await repository.Create(entry);
+		//}
 	}
 }
