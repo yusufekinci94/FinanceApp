@@ -29,9 +29,11 @@ namespace FinanceApp.MVC
 			builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 			builder.Services.AddScoped<IEntryManager, EntryManager>();
 			builder.Services.AddScoped<IEntryRepository, EntryRepository>();
+            builder.Services.AddHttpContextAccessor();
 
 
-			builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+
+            builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
