@@ -43,10 +43,13 @@ namespace FinanceApp.DAL.Context
             var userEntities = Users.Where(e => e.Id == userId).ToList();
             foreach(var userEntity in userEntities)
             {
-                userEntity.Balance = userEntity.TotalIncome - userEntity.TotalOutgoing;
+                userEntity.Balance = userEntity.Cash - userEntity.CreditDebt;
             }
+            Database.ExecuteSqlRaw("ALTER TABLE CategoryEntry NOCHECK CONSTRAINT FK_CategoryEntry_Entries_EntriesId");
+            var result = base.SaveChanges();
+            
 
-            return base.SaveChanges();
+            return result;
         }
         private string GetCurrentUserId()
         {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceApp.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20231017131628_initDB")]
-    partial class initDB
+    [Migration("20231026172248_initDb")]
+    partial class initDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,8 +58,14 @@ namespace FinanceApp.DAL.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double?>("CreditCardInterest")
+                        .HasColumnType("float");
+
                     b.Property<double?>("CreditDebt")
                         .HasColumnType("float");
+
+                    b.Property<DateTime?>("CreditPayDay")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -137,7 +143,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 17, 16, 16, 28, 824, DateTimeKind.Local).AddTicks(8986));
+                        .HasDefaultValue(new DateTime(2023, 10, 26, 20, 22, 48, 164, DateTimeKind.Local).AddTicks(4262));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -173,10 +179,13 @@ namespace FinanceApp.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("CategoryIds")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 17, 16, 16, 28, 825, DateTimeKind.Local).AddTicks(1542));
+                        .HasDefaultValue(new DateTime(2023, 10, 26, 20, 22, 48, 164, DateTimeKind.Local).AddTicks(8125));
 
                     b.Property<string>("Description")
                         .IsRequired()

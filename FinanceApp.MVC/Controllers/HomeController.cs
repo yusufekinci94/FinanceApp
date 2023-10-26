@@ -19,20 +19,21 @@ namespace FinanceApp.MVC.Controllers
 		private readonly UserManager<AppUser> userManager;
 		private readonly ICategoryManager categoryManager;
 		private readonly IMapper mapper;
+        private readonly CategoryService categoryService;
 
 
-
-		public HomeController(ILogger<HomeController> logger, SqlDbContext dbContext, UserManager<AppUser> userManager, ICategoryManager categoryManager, IMapper mapper)
+        public HomeController(ILogger<HomeController> logger, SqlDbContext dbContext, UserManager<AppUser> userManager, ICategoryManager categoryManager, IMapper mapper,
+            CategoryService categoryService)
 		{
 			_logger = logger;
 			this.dbContext = dbContext;
 			this.userManager = userManager;
 			this.categoryManager = categoryManager;
 			this.mapper = mapper;
+            this.categoryService = categoryService;
 
 
-
-		}
+        }
 
 		public async Task<IActionResult> Index()
 		{
@@ -43,6 +44,15 @@ namespace FinanceApp.MVC.Controllers
                 {
                     return View(user); 
                 }
+				if (user.CreditPayDay != null)
+				{
+					if(DateTime.Now.Day == user.CreditPayDay.Value.Day)
+					{
+						user.CreditDebt = user.CreditDebt * user.CreditCardInterest;
+						dbContext.Update(user);
+						dbContext.SaveChanges();
+					}
+				}
             }
             return View();
 		}
@@ -68,31 +78,37 @@ namespace FinanceApp.MVC.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Entry(EntryModel m)
 		{
-			if (ModelState.IsValid)
-			{
-				Entities.Concrete.Entry entry = new Entry();
-				entry.AppUserId = userManager.GetUserId(this.User);
-				//  entry.User = ?
-				entry.Description = m.name;
-				entry.Amount = m.Amount;
-				entry.Type = m.Type;
-				entry.TypeMoney = m.TypeMoney;
-				var selectedCategories = Request.Form["Categories"];
-				if (selectedCategories.Count > 0)
-				{
-					foreach (var categoryValue in selectedCategories)
-					{
-						var category = dbContext.Categories.FirstOrDefault(c => c.Name == categoryValue);
+            if (ModelState.IsValid)
+            {
+                Entities.Concrete.Entry entry = new Entities.Concrete.Entry();
+                entry.AppUserId = userManager.GetUserId(this.User);
+                //  entry.User = ?
 
-						m.Categories.Add(category);
+                entry.Description = m.name;
+                entry.Amount = m.Amount;
+                entry.Type = m.Type;
+                entry.TypeMoney = m.TypeMoney;
 
+                var selectedCategories = Request.Form["Categories"];
+                var categoryIdsList = new List<string>();
 
-					}
+                if (selectedCategories.Count > 0)
+                {
+                    foreach (var categoryValue in selectedCategories)
+                    {
+                        var category = dbContext.Categories.FirstOrDefault(c => c.Name == categoryValue);
 
-					entry.Categories = m.Categories;
+                        if (category != null)
+                        {
+                            categoryIdsList.Add(category.Name.ToString());
+                        }
+                    }
 
-					dbContext.Entries.Add(entry);
-					dbContext.SaveChanges();
+                    entry.Categories = m.Categories;
+                    entry.CategoryIds = string.Join(",", categoryIdsList); 
+
+                    dbContext.Entries.Add(entry);
+                    dbContext.SaveChanges();
                     var user = dbContext.Users.FirstOrDefault(x => x.Id == entry.AppUserId);
 
                     if (user != null)
@@ -122,7 +138,7 @@ namespace FinanceApp.MVC.Controllers
                             }
                         }
 
-                        user.Balance = user.TotalIncome - user.TotalOutgoing;
+                        user.Balance = user.Cash - user.CreditDebt;
 
                         
 

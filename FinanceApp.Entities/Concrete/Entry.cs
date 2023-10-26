@@ -16,8 +16,8 @@ namespace FinanceApp.Entities.Concrete
 		public TipPara TypeMoney { get; set; }
 		public string AppUserId { get; set; }
 		public AppUser User { get; set; }
-        
-		public List<Category> Categories { get; set; }
+        public string? CategoryIds { get; set; }
+        public List<Category>? Categories { get; set; }
 
 
     }

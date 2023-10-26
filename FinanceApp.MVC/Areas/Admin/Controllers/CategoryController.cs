@@ -1,4 +1,5 @@
-﻿using FinanceApp.DAL.Context;
+﻿using FinanceApp.BL.Concrete;
+using FinanceApp.DAL.Context;
 using FinanceApp.Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,11 +14,13 @@ namespace FinanceApp.MVC.Areas.Admin.Controllers
     {
         private readonly SqlDbContext dbContext;
         private readonly UserManager<AppUser> userManager;
+        private readonly CategoryService categoryService;
 
-        public CategoryController(SqlDbContext dbContext, UserManager<AppUser> userManager)
+        public CategoryController(SqlDbContext dbContext, UserManager<AppUser> userManager,CategoryService categoryService)
         {
             this.dbContext = dbContext;
             this.userManager = userManager;
+            this.categoryService=categoryService;
         }
         public IActionResult Index()
         {

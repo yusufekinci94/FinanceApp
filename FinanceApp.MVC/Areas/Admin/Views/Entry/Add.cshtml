@@ -1,0 +1,70 @@
+﻿@using FinanceApp.BL.Abstract;
+@using FinanceApp.DAL.Context;
+@using FinanceApp.Entities.Concrete;
+@using Microsoft.AspNetCore.Identity;
+@model FinanceApp.MVC.Models.EntryModel
+@inject ICategoryManager categoryManager;
+@inject UserManager<AppUser> userManager;
+@inject IEntryManager entryManager;
+@inject SqlDbContext dbContext;
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    var user = await userManager.GetUserAsync(User);
+    var entries = await entryManager.GetAllInclude(null, e => e.Categories);
+    foreach (var entry in entries)
+    {
+        var str = "";
+    }
+    var categoriesWithAppUserID = await categoryManager.GetAll(x => x.AppUserId == user.Id);
+    var itemsFromDatabase = dbContext.Categories.Select(item => item.Name).ToList();
+    var selectListItems = itemsFromDatabase.Select(item => new SelectListItem { Text = item, Value = item }).ToList();
+}
+
+<h1>Add</h1>
+
+<div class="card">
+    <div class="card-header">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+    <div class="card-body">
+        <form asp-action="Add" method="post">
+
+
+            <div class="mb-3">
+                <label asp-for="@Model.name">Entry Description</label>
+                <input class="form-control" asp-for="@Model.name" required>
+
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Amount">Entry Amount </label>
+                <input class="form-control" asp-for="@Model.Amount" required>
+
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Type">Entry Type </label>
+                <select class="form-select" asp-for="@Model.Type">
+                    <option selected>Choose a Type</option>
+                    <option value="1">Income</option>
+                    <option value="2">Outgoing</option>
+                </select>
+            </div> <div class="mb-3">
+                <label asp-for="@Model.TypeMoney">Entry Type of Money </label>
+                <select class="form-select" asp-for="@Model.TypeMoney">
+                    <option selected>Choose a Type Of Money</option>
+                    <option value="1">Cash</option>
+                    <option value="2">Credit</option>
+                </select>
+
+            </div>
+            <div>
+            <select asp-for="Categories" asp-items="selectListItems" multiple></select>
+        </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">Add</button>
+            </div>
+        </form>
+    </div>
+    </div>

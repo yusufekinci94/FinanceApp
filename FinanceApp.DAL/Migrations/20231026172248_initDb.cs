@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FinanceApp.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class initDB : Migration
+    public partial class initDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,6 +36,8 @@ namespace FinanceApp.DAL.Migrations
                     MonthlyEarning = table.Column<double>(type: "float", nullable: true),
                     CreditDebt = table.Column<double>(type: "float", nullable: true),
                     Cash = table.Column<double>(type: "float", nullable: true),
+                    CreditCardInterest = table.Column<double>(type: "float", nullable: true),
+                    CreditPayDay = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -171,7 +173,7 @@ namespace FinanceApp.DAL.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 17, 16, 16, 28, 824, DateTimeKind.Local).AddTicks(8986)),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 26, 20, 22, 48, 164, DateTimeKind.Local).AddTicks(4262)),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -195,7 +197,8 @@ namespace FinanceApp.DAL.Migrations
                     Type = table.Column<byte>(type: "tinyint", nullable: false),
                     TypeMoney = table.Column<byte>(type: "tinyint", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 17, 16, 16, 28, 825, DateTimeKind.Local).AddTicks(1542)),
+                    CategoryIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 26, 20, 22, 48, 164, DateTimeKind.Local).AddTicks(8125)),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>

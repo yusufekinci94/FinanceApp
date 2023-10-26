@@ -11,7 +11,8 @@ namespace FinanceApp.MVC.Models
         public int Month { get; set; } = DateTime.Now.Month;
         public Tip Type { get; set; }
         public TipPara TypeMoney { get; set; }
-		public List<Category> Categories { get; set; }
+        public string? CategoryIds { get; set; }
+        public List<Category> Categories { get; set; }
 
 		public int UserId { get; set; }
 		

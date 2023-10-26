@@ -17,7 +17,8 @@ namespace FinanceApp.Entities.Concrete
         public double? MonthlyEarning { get; set; }
         public double? CreditDebt { get; set; }
         public double? Cash { get; set; }
-      
+        public double? CreditCardInterest { get; set; }
+        public DateTime? CreditPayDay { get; set; }
         public ICollection<Entry> Entries { get; set; }
     }
 }

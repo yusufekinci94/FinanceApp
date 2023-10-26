@@ -29,8 +29,9 @@ namespace FinanceApp.MVC
 			builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 			builder.Services.AddScoped<IEntryManager, EntryManager>();
 			builder.Services.AddScoped<IEntryRepository, EntryRepository>();
+			builder.Services.AddScoped<CategoryService>();
             builder.Services.AddHttpContextAccessor();
-
+            builder.Services.AddTransient<CategoryService>();
 
 
             builder.Services.AddIdentity<AppUser, IdentityRole>(options =>

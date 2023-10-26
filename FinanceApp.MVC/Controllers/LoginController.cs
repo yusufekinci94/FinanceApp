@@ -114,7 +114,10 @@ namespace FinanceApp.MVC.Controllers
 					CreditDebt=0,
 					TotalIncome=0,
 					TotalOutgoing=0,
-					MonthlyEarning=0
+					MonthlyEarning=0,
+					CreditCardInterest=3.26,
+					
+					
 					
 					
 					
