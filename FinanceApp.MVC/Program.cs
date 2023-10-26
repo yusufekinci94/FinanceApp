@@ -40,10 +40,9 @@ namespace FinanceApp.MVC
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 3;
-                options.User.RequireUniqueEmail = false;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
                 options.SignIn.RequireConfirmedEmail = false; // Buayi Degistimeyi unutma
-
+                options.User.RequireUniqueEmail = true;
                 options.Lockout.MaxFailedAccessAttempts = 5;
 
 

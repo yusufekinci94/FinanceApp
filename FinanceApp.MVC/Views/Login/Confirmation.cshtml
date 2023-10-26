@@ -1,15 +1,17 @@
 ﻿@model ConfirmModel
 @{
-    Layout = null;
+    Layout = "LoginLayout";
 }
-
+<h3> Welcome To Confirmation Page</h3>
+<h5> Please enter your confirmation code which is sent to your e-mail</h5>
+<span>(Don't forget to check your spam folder)</span>
 <form asp-action="Confirmation" method="post">
     <div class="form-group">
          <input type="hidden" asp-for="confirmCode" />
     </div>
 
     <div class="form-group">
-        <label asp-for="confirmCodeAgain">Onay Kodu (Tekrar)</label>
+        <label asp-for="confirmCodeAgain">Confirmation Code</label>
         <input asp-for="confirmCodeAgain" class="form-control" />
         <span asp-validation-for="confirmCodeAgain" class="text-danger"></span>
     </div>

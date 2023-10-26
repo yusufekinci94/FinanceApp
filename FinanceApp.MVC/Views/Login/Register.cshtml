@@ -1,7 +1,9 @@
 ﻿@model RegisterDTO
 @{
-	Layout = "";
+	Layout = "~/Views/Shared/LoginLayout.cshtml";
 }
+
+<h3>Welcome To Registeration Page</h3>
 @using (Html.BeginForm())
 {
 	@Html.ValidationSummary()
@@ -11,7 +13,7 @@
 		<p>Enter Your Password:@Html.PasswordFor(x=>x.Password)</p>
 		<p>Enter Your Password Again:@Html.PasswordFor(x=>x.PasswordRepeat)</p>
 		<p>Enter Your Phone Number:@Html.TextBoxFor(x=>x.PhoneNumber)</p>
-		
+
 	}
 	<input type="submit" value="Register" class="btn btn-success">
 }
@@ -19,4 +21,4 @@
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
-}
+			}

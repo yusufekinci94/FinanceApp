@@ -9,7 +9,7 @@ namespace FinanceApp.MVC.Models.DTOs
         public string Email { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Password Required")]
-        [MinLength(3, ErrorMessage = "Password Minimum 3 Characters")] //SHOULD I DELETE HERE ?
+        [MinLength(8, ErrorMessage = "Password Minimum 8 Characters")] //SHOULD I DELETE HERE ?
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [Compare("Password",ErrorMessage ="Passwords Must Match")]

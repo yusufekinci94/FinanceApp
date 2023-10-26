@@ -15,8 +15,20 @@ namespace FinanceApp.MVC.CustomValidations
 				errors.Add(new IdentityError { Code = "UserNameLength", Description = "Username must be between 3-25 characters" });
 			if (user.Email.Length > 70) // Emailin 70 karakterden fazla olmaması kontrolü
 				errors.Add(new IdentityError { Code = "EmailLength", Description = "E-mail Can not be longer than 70 characters" });
+            var existingUser = manager.FindByNameAsync(user.UserName).Result;
+            if (existingUser != null && !string.Equals(existingUser.Id, user.Id))
+            {
+                errors.Add(new IdentityError { Code = "DuplicateUsername", Description = "This username is already in use." });
+            }
+            var existingUserByEmail = manager.FindByEmailAsync(user.Email).Result;
+            if (existingUserByEmail != null && !string.Equals(existingUserByEmail.Id, user.Id))
+            {
+                errors.Add(new IdentityError { Code = "DuplicateEmail", Description = "This email is already in use." });
+            }
+            
 
-			if (!errors.Any())
+
+            if (!errors.Any())
 				return Task.FromResult(IdentityResult.Success);
 			return Task.FromResult(IdentityResult.Failed(errors.ToArray()));
 		}

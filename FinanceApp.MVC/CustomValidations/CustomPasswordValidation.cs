@@ -8,8 +8,8 @@ namespace FinanceApp.MVC.CustomValidations
 		public Task<IdentityResult> ValidateAsync(UserManager<AppUser> manager, AppUser user, string? password)
 		{
 			List<IdentityError> errors = new List<IdentityError>();
-			if (password.Length < 3)
-				errors.Add(new IdentityError { Code = "PasswordLength", Description = "Password Minimum 3 Characters" });
+			if (password.Length < 8)
+				errors.Add(new IdentityError { Code = "PasswordLength", Description = "Password Minimum 8 Characters" });
 			if (password.ToLower().Contains(user.UserName.ToLower())) 
 				errors.Add(new IdentityError { Code = "PasswordContainsUserName", Description = "Password Can not Contain Username" });
 			if (!errors.Any()) 
