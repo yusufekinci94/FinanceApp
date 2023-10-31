@@ -4,6 +4,7 @@ using FinanceApp.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceApp.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231027150415_AddHasExecutedForThisMonth")]
+    partial class AddHasExecutedForThisMonth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,9 +66,6 @@ namespace FinanceApp.DAL.Migrations
 
                     b.Property<DateTime?>("CreditPayDay")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("DeadLineExecute")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -146,7 +146,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 31, 18, 4, 40, 893, DateTimeKind.Local).AddTicks(2568));
+                        .HasDefaultValue(new DateTime(2023, 10, 27, 18, 4, 15, 140, DateTimeKind.Local).AddTicks(4407));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -188,7 +188,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 31, 18, 4, 40, 893, DateTimeKind.Local).AddTicks(6760));
+                        .HasDefaultValue(new DateTime(2023, 10, 27, 18, 4, 15, 140, DateTimeKind.Local).AddTicks(6988));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -209,41 +209,6 @@ namespace FinanceApp.DAL.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Entries");
-                });
-
-            modelBuilder.Entity("FinanceApp.Entities.Concrete.Goal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AppUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("TargetDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double?>("TargetGoal")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("TargetStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<byte?>("Type")
-                        .HasColumnType("tinyint");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Goals");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -1,0 +1,64 @@
+﻿@model FinanceApp.MVC.Areas.Admin.Models.GoalDTO
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Welcome To Your Goal Section Menu</h1>
+<div class="card">
+    <div class="card-header">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+    <div class="card-body">
+        <form asp-action="index" asp-area="admin" method="post">
+            <div class="mb-3">
+                <input type="hidden" asp-for="@Model.TargetStatus" />
+                <input type="hidden" asp-for="@Model.AppUserId" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Type">Goal Type </label>
+                <select class="form-select" asp-for="@Model.Type">
+                    <option selected>Choose a Type</option>
+                    <option value="1">Income</option>
+                    <option value="2">Outgoing</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.TargetGoal">Your Goal Amount</label>
+            </div>
+            <div class="mb-3">
+                <div style="display: inline-flex; align-items: center;">
+                    <input class="form-control" style="width: 100px;" asp-for="@Model.TargetGoal" type="number" step="0.01" required>
+                    <span style="margin-left: 5px;">₺</span>
+                </div>
+
+            </div>
+            @{
+                var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+            }
+            <div class="mb-3">
+                <label asp-for="@Model.TargetDate">Select Target Date</label>
+                <input asp-for="@Model.TargetDate" class="form-control" style="width: 300px;" type="date" min="@currentDate">
+            </div>
+            <br />
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </form>
+    </div>
+    <form asp-action="cancel" asp-area="admin" method="post">
+        <div class="mb-3">
+            <input type="hidden" asp-for="@Model.TargetStatus" />
+            <input type="hidden" asp-for="@Model.AppUserId" />
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="mb-3">
+            <p>If you want to cancel saving progress click this</p>
+            <button type="submit" class="btn btn-danger">Cancel</button>
+        </div>
+    </form>
+
+</div>

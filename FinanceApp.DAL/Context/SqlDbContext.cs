@@ -19,6 +19,7 @@ namespace FinanceApp.DAL.Context
         private readonly IHttpContextAccessor _httpContextAccessor;
         public DbSet<Entry> Entries { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Goal> Goals { get; set; }
       
        
         public SqlDbContext()

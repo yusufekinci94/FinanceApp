@@ -32,6 +32,7 @@ namespace FinanceApp.MVC
 			builder.Services.AddScoped<CategoryService>();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddTransient<CategoryService>();
+            builder.Services.AddSingleton<IMonthlyTask, MonthlyTask>();
 
 
             builder.Services.AddIdentity<AppUser, IdentityRole>(options =>

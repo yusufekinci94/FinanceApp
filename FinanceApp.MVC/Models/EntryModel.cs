@@ -12,11 +12,16 @@ namespace FinanceApp.MVC.Models
         public Tip Type { get; set; }
         public TipPara TypeMoney { get; set; }
         public string? CategoryIds { get; set; }
-        public List<Category> Categories { get; set; }
-
+        public List<Category>? Categories { get; set; }
+        public double? Cash { get; set; }
+        public double? CashMinus { get; set; }
+        public double? CreditDebt { get; set; }
+        public double? CreditDebtMinus { get; set; }
 		public int UserId { get; set; }
-		
+        public bool checkBox { get; set; }
+        public string? categoryName { get; set; }
+        public string? categoryDescription { get; set; }
 
-	}
+    }
 
 }

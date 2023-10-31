@@ -78,6 +78,8 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <li class="nav-item"> <a class="nav-link" asp-action="entry" asp-controller="home" data-scroll-nav="0">Enter Entry</a> </li>
+                        <li class="nav-item"> <a class="nav-link" asp-action="createcategory" asp-controller="home" data-scroll-nav="0">Enter Category</a> </li>
                         <li class="nav-item"> <a class="nav-link" asp-action="index" asp-controller="home" asp-area="admin" data-scroll-nav="6">Hosgeldiniz @User.Identity.Name</a> </li>
                         <li class="nav-item"> <a class="nav-link" asp-action="Logout" asp-controller="Login" data-scroll-nav="6">Logout</a> </li>
 

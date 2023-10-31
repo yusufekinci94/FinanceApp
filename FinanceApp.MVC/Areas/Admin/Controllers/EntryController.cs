@@ -72,33 +72,91 @@ namespace FinanceApp.MVC.Areas.Admin.Controllers
             }
             try
             {
+
                 Entities.Concrete.Entry entry = new Entities.Concrete.Entry();
                 entry.AppUserId = userManager.GetUserId(this.User);
+                //  entry.User = ?
+
                 entry.Description = m.name;
                 entry.Amount = m.Amount;
                 entry.Type = m.Type;
                 entry.TypeMoney = m.TypeMoney;
-                var selectedCategories = Request.Form["Categories"];
-                var categoryIdsList = new List<string>();
-
-                if (selectedCategories.Count > 0)
+                if (m.checkBox == false)
                 {
-                    foreach (var categoryValue in selectedCategories)
+                    var selectedCategories = Request.Form["Categories"];
+                    var categoryIdsList = new List<string>();
+
+                    if (selectedCategories.Count > 0)
                     {
-                        var category = dbContext.Categories.FirstOrDefault(c => c.Name == categoryValue);
-
-                        if (category != null)
+                        foreach (var categoryValue in selectedCategories)
                         {
-                            categoryIdsList.Add(category.Name.ToString());
+                            var category = dbContext.Categories.FirstOrDefault(c => c.Name == categoryValue);
+
+                            if (category != null)
+                            {
+                                categoryIdsList.Add(category.Name.ToString());
+                            }
                         }
+
+                        entry.Categories = m.Categories;
+                        entry.CategoryIds = string.Join(",", categoryIdsList);
+
+                        dbContext.Entries.Add(entry);
+                        dbContext.SaveChanges();
+                        var user = dbContext.Users.FirstOrDefault(x => x.Id == entry.AppUserId);
+
+                        if (user != null)
+                        {
+                            if (entry.Type == Tip.Giris)
+                            {
+                                user.TotalIncome += entry.Amount;
+                                if (entry.TypeMoney == TipPara.Cash)
+                                {
+                                    user.Cash += entry.Amount;
+                                }
+                                else if (entry.TypeMoney == TipPara.Credit)
+                                {
+                                    user.CreditDebt -= entry.Amount;
+                                }
+                            }
+                            else if (entry.Type == Tip.Cikis)
+                            {
+                                user.TotalOutgoing += entry.Amount;
+                                if (entry.TypeMoney == TipPara.Cash)
+                                {
+                                    user.Cash -= entry.Amount;
+                                }
+                                else if (entry.TypeMoney == TipPara.Credit)
+                                {
+                                    user.CreditDebt += entry.Amount;
+                                }
+                            }
+
+                            user.Balance = user.Cash - user.CreditDebt;
+
+
+
+                            dbContext.SaveChanges();
+                        }
+                        return RedirectToAction("Index");
                     }
-
+                }
+                if (m.checkBox == true)
+                {
+                    Category category = new Category()
+                    {
+                        AppUserId = entry.AppUserId,
+                        Name = m.categoryName,
+                        Description = m.categoryDescription
+                    };
+                    dbContext.Categories.Add(category);
+                    dbContext.SaveChanges();
+                    entry.CategoryIds = category.Name;
                     entry.Categories = m.Categories;
-                    entry.CategoryIds = string.Join(",", categoryIdsList);
-
                     dbContext.Entries.Add(entry);
                     dbContext.SaveChanges();
                     var user = dbContext.Users.FirstOrDefault(x => x.Id == entry.AppUserId);
+
                     if (user != null)
                     {
                         if (entry.Type == Tip.Giris)
@@ -128,8 +186,13 @@ namespace FinanceApp.MVC.Areas.Admin.Controllers
 
                         user.Balance = user.Cash - user.CreditDebt;
 
+
+
                         dbContext.SaveChanges();
+                        return RedirectToAction("Index");
+
                     }
+                    return View(m);
                 }
             }
             catch (Exception ex)

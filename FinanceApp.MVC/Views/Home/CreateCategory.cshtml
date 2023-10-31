@@ -1,25 +1,35 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "CreateCategory";
     Layout = "~/Views/Shared/new_layout.cshtml";
 }
 
 @model CategoryDTO
-<div class="bg-success">
-	<h3> Enter Your Category</h3>
 
-	<form asp-action="CreateCategory">
-		<div>
-			<label asp-for="@Model.Name">Category name</label>
-			<input asp-for="@Model.Name" required />
-			<span asp-validation-for="@Model.Name"></span>
-		</div>
-		<div>
-			<label asp-for="@Model.Description">Category Description</label>
-			<input asp-for="@Model.Description" required />
-			<span asp-validation-for="@Model.Name"></span>
-		</div>
-		<input type="submit" value="Save" class="btn btn-danger">
+<div class="banner-overlay">
+    <div class="row" style="background: linear-gradient(to left, #7a60ff, #cd9ffa);">
+        <div class="col-1"></div>
+        <div class=" animated fadeInDown col-10">
 
-	</form>
+            <h3> Enter Your Category</h3>
+            <h5><strong style="color: red;">@ViewBag.Message</strong></h5>
+
+            <form asp-action="CreateCategory">
+                <div>
+                    <label asp-for="@Model.Name">Category name</label>
+                    <input asp-for="@Model.Name" required />
+                    <span asp-validation-for="@Model.Name"></span>
+                </div>
+                <div>
+                    <label asp-for="@Model.Description">Category Description</label>
+                    <input asp-for="@Model.Description" required />
+                    <span asp-validation-for="@Model.Name"></span>
+                </div>
+                <input type="submit" value="Save" class="btn btn-danger">
+
+            </form>
+
+
+        </div>
+        <div class="col-1"></div>
+    </div>
 </div>

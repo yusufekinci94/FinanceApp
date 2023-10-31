@@ -4,6 +4,7 @@ using FinanceApp.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceApp.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231031145330_addgoal")]
+    partial class addgoal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,7 +149,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 31, 18, 4, 40, 893, DateTimeKind.Local).AddTicks(2568));
+                        .HasDefaultValue(new DateTime(2023, 10, 31, 17, 53, 29, 884, DateTimeKind.Local).AddTicks(6771));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -188,7 +191,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 31, 18, 4, 40, 893, DateTimeKind.Local).AddTicks(6760));
+                        .HasDefaultValue(new DateTime(2023, 10, 31, 17, 53, 29, 884, DateTimeKind.Local).AddTicks(9583));
 
                     b.Property<string>("Description")
                         .IsRequired()

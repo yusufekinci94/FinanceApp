@@ -109,13 +109,15 @@ namespace FinanceApp.MVC.Controllers
 					UserName = registerDTO.Username,
 					Email = registerDTO.Email,
 					PhoneNumber = registerDTO.PhoneNumber,
-					Balance=0,
-					Cash=0,
-					CreditDebt=0,
-					TotalIncome=0,
-					TotalOutgoing=0,
-					MonthlyEarning=0,
-					CreditCardInterest=3.26,
+					Balance = 0,
+					Cash = 0,
+					CreditDebt = 0,
+					TotalIncome = 0,
+					TotalOutgoing = 0,
+					MonthlyEarning = 0,
+					CreditCardInterest = 3.26,
+					DeadLineExecute = false,
+					CreditPayDay = DateTime.Now
 					
 					
 					
@@ -176,6 +178,15 @@ namespace FinanceApp.MVC.Controllers
 					user.EmailConfirmed = true;
 				}
 				dbContext.SaveChanges();
+				Goal goal = new Goal()
+				{
+					AppUserId = user.Id,
+					TargetStatus = false
+
+				};
+				dbContext.Goals.Add(goal);
+				dbContext.SaveChanges();
+
 				return RedirectToAction("Login");
 			}
             return View(confirmModel);
