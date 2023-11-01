@@ -36,6 +36,22 @@ namespace FinanceApp.MVC.Areas.Admin.Controllers
                 TargetStatus = result.TargetStatus,
                 Type = result.Type
             };
+            var userId = userManager.GetUserId(this.User);
+            if (!dbContext.Saves.Where(x => x.AppUserId == userId).Any())
+            {
+                ViewBag.MessageSave = "To Enter a Save You must Enter The Saving Infos ";
+                Save save = new Save()
+                {
+                    Amount = 0,
+                    AppUserId = userId,
+                    Type = Tip.Giris,
+                    Status=false
+                };
+                dbContext.Saves.Add(save);
+                dbContext.SaveChanges();
+            }
+            else
+            { ViewBag.MessageSave = ""; }
             return View(viewModel);
         }
         [HttpPost]
@@ -53,7 +69,8 @@ namespace FinanceApp.MVC.Areas.Admin.Controllers
                 goalentity.TargetDate = goalDTO.TargetDate;
                 dbContext.Goals.Update(goalentity);
                 await dbContext.SaveChangesAsync();
-                return RedirectToAction("index");
+                ViewBag.MessageSave = "";
+                return RedirectToAction("saver","home",new {area=""});
             }
             
             return View(goalentity);

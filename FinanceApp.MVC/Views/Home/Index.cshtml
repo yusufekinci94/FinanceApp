@@ -1,4 +1,4 @@
-﻿@model AppUser
+﻿@model UsersDTO
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/new_layout.cshtml";
@@ -8,23 +8,48 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h4>Balance:@Model.Balance</h4>
+                <h4>Balance:@Model.Balance ₺</h4>
             </div>
             <div class="col-md-6">
-                <h4>Total Income:@Model.TotalIncome   <br>     Total Outgoing:@Model.TotalOutgoing </h4>
+                <h4>Total Income:@Model.TotalIncome ₺  <br>     Total Outgoing:@Model.TotalOutgoing ₺</h4>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <h4>Cash:@Model.Cash</h4>
+                <h4>Cash:@Model.Cash ₺</h4>
             </div>
             <div class="col-md-6">
-                <h4>Credit Debt:@Model.CreditDebt </h4>
+                <h4>Credit Debt:@Model.CreditDebt ₺</h4>
             </div>
         </div>
-       
+        @{
+
+            if (Model.TargetStatus == true)
+            {
+                TimeSpan? difference = Model.TargetDate - DateTime.Now;
+                var average = Model.TargetGoal / difference.Value.Days;
+
+                <div class="container">
+                    <div class="row"><h5>Target Goal: @Model.TargetGoal ₺</h5> </div>
+                    <div class="row"><h5>Remaining Days To Your Goal: @difference.Value.Days</h5></div>
+                    <div class="row"><h5>Average amount of input you need to enter per day: @average ₺</h5></div>
+
+                </div>
+            }
+        }
+
     </div>
 }
+@*<div class="row">
+    @if (@Model.Type == Tip.Giris)
+    {
+        <h5>Income</h5>
+    }
+    else
+    {
+        <h5>OutGoing</h5>
+    }
+</div>*@
 
 
 @*<script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>

@@ -34,18 +34,36 @@ namespace FinanceApp.MVC.Controllers
 
 
         }
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             if (userManager.GetUserId(this.User) != null)
             {
+                UsersDTO usersDTO = new UsersDTO();
                 var userid = await userManager.GetUserAsync(this.User);
                 if (userid != null)
                 {
-                    return View(userid);
+                    var usersEntity = dbContext.Users.Find(userid.Id);
+                    var goalEntity = dbContext.Goals.FirstOrDefault(x => x.AppUserId == userid.Id);
+                    usersDTO.Balance = usersEntity.Balance;
+                    usersDTO.Cash = usersEntity.Cash;
+                    usersDTO.TotalIncome = usersEntity.TotalIncome;
+                    usersDTO.TotalOutgoing = usersEntity.TotalOutgoing;
+                    usersDTO.CreditDebt = usersEntity.CreditDebt;
+                    usersDTO.CreditPayDay = usersEntity.CreditPayDay;
+                    if (goalEntity.TargetGoal != null && goalEntity.TargetDate != null)
+                    {
+                        usersDTO.TargetGoal = goalEntity.TargetGoal;
+                        usersDTO.TargetDate = goalEntity.TargetDate;
+                        usersDTO.Type = goalEntity.Type;
+                    }
+
+                    usersDTO.TargetStatus = goalEntity.TargetStatus;
+                    return View(usersDTO);
                 }
                 var users = dbContext.Users.ToList();
-                foreach(var user in users) {
+                foreach (var user in users)
+                {
                     if (user.CreditPayDay != null && user.DeadLineExecute == true)
                     {
                         // Eğer bu ayın günü CreditPayDay gününe eşitse ve daha önce bu ay için işlem yapılmadıysa, işlemi yap.
@@ -58,7 +76,9 @@ namespace FinanceApp.MVC.Controllers
                         }
                     }
                 }
-                
+
+
+
             }
             return View();
         }
@@ -90,9 +110,9 @@ namespace FinanceApp.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CategoryDTO category)
         {
-            
+
             //if (category.Description!=null&&category.Name!=null)
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 Entities.Concrete.Category _category = new Entities.Concrete.Category();
                 _category.AppUserId = userManager.GetUserId(this.User);
@@ -247,17 +267,17 @@ namespace FinanceApp.MVC.Controllers
                 {
                     List<string> errorMessages = new List<string>();
 
-                    
+
                     foreach (var modelState in ViewData.ModelState.Values)
                     {
                         foreach (var error in modelState.Errors)
                         {
-                           
+
                             errorMessages.Add(error.ErrorMessage);
                         }
                     }
 
-                    
+
                 }
 
             }
@@ -298,6 +318,68 @@ namespace FinanceApp.MVC.Controllers
                 }
             }
             return RedirectToAction("entry");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Saver()
+        {
+            var userId = userManager.GetUserId(this.User);
+            var goalEntity = dbContext.Goals.FirstOrDefault(x => x.AppUserId == userId);
+            if (!dbContext.Saves.Where(x => x.AppUserId == userId).Any())
+            {
+                return RedirectToAction("index", "saving", new { area = "admin" });
+            }
+            else
+            {
+                SaverDTO saverDTO = new SaverDTO()
+                {
+                    AppUserId = userId,
+                    TargetGoal = goalEntity.TargetGoal,
+                    TargetDate = goalEntity.TargetDate,
+                    TargetStatus = goalEntity.TargetStatus,
+                    Status = false,
+                    Type = goalEntity.Type,
+                    SaverAmount = 0,
+                    SaverType = null
+                };
+                return View(saverDTO);
+            }
+
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Saver(SaverDTO saverDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = userManager.GetUserId(this.User);
+                var goalEntity = dbContext.Goals.FirstOrDefault(x => x.AppUserId == userId);
+
+                Save save = new Save
+                {
+                    Amount = saverDto.SaverAmount,
+                    AppUserId = saverDto.AppUserId,
+                    Status = true,
+                    Type = saverDto.SaverType.Value,
+                };
+                dbContext.Saves.Add(save);
+                dbContext.SaveChanges();
+                if (saverDto.SaverType.Value == Tip.Giris)
+                {
+                    goalEntity.TargetGoal = goalEntity.TargetGoal + saverDto.SaverAmount;
+                    dbContext.Goals.Update(goalEntity);
+                    dbContext.SaveChanges();
+                }else if (saverDto.SaverType.Value == Tip.Cikis)
+                {
+                    goalEntity.TargetGoal = goalEntity.TargetGoal - saverDto.SaverAmount;
+                    dbContext.Goals.Update(goalEntity);
+                    dbContext.SaveChanges();
+                }
+                return RedirectToAction("saver", "home");
+            }else
+            {
+                return View(saverDto);
+            }
+
         }
         [HttpPost]
         public IActionResult Credit(EntryModel m)

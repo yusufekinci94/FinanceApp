@@ -1,0 +1,54 @@
+﻿@using FinanceApp.Entities.Concrete;
+@model ICollection<Save>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Saves</h1>
+<a class="btn btn-success" asp-action="Add">Add New Save</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Save Amount</th>
+            <th>Save Create Date</th>
+            <th>Save Type</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Status == true)
+            {
+                <tr>
+                    <td>@item.Amount</td>
+                    <td>@item.CreateDate</td>
+                    @if (@item.Type == Tip.Giris)
+                    {
+                        <td>Increase</td>
+                    }else
+                    {
+                        <td>Decrease</td>
+                    }
+                    
+                    @*  <td>
+            @foreach(var category in item.Categories)
+            {
+            @category.Name
+            if (category != item.Categories.Last())
+            {
+            @:", "
+            }
+            }
+            </td>*@
+                    <td>
+                        @*  <a class="btn btn-success" asp-route-id="@item.Id" asp-action="Update">Update</a>*@
+                        <a class="btn btn-danger" asp-route-id="@item.Id" asp-action="Delete">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>

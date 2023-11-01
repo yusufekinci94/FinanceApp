@@ -4,6 +4,7 @@ using FinanceApp.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceApp.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231101003809_addsaveentity")]
+    partial class addsaveentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,7 +149,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 1, 4, 16, 41, 604, DateTimeKind.Local).AddTicks(9184));
+                        .HasDefaultValue(new DateTime(2023, 11, 1, 3, 38, 9, 50, DateTimeKind.Local).AddTicks(312));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -188,7 +191,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 1, 4, 16, 41, 605, DateTimeKind.Local).AddTicks(1820));
+                        .HasDefaultValue(new DateTime(2023, 11, 1, 3, 38, 9, 50, DateTimeKind.Local).AddTicks(2974));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -254,21 +257,8 @@ namespace FinanceApp.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<string>("AppUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");

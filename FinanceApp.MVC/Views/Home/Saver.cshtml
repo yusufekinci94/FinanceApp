@@ -1,0 +1,42 @@
+﻿@model SaverDTO
+@{
+    ViewData["Title"] = "Saver";
+    Layout = "~/Views/Shared/new_layout.cshtml";
+}
+
+<div class="container">
+
+    @{
+        TimeSpan? difference = Model.TargetDate - DateTime.Now;
+        var average = Model.TargetGoal / difference.Value.Days;
+    }
+    <div class="container">
+        <div class="row"><h5>Target Goal: @Model.TargetGoal ₺</h5> </div>
+        <div class="row"><h5>Remaining Days To Your Goal: @difference.Value.Days</h5></div>
+        <div class="row"><h5>Average amount of input you need to enter per day: @average ₺</h5></div>
+
+    </div>
+    
+    <form asp-action="Saver" method="post">
+        <div>
+            <input type="hidden" asp-for="@Model.AppUserId" />
+        </div>
+        <div class="form-group">
+            <label asp-for="SaverAmount" class="control-label">Enter The Save Amount</label>
+            <input asp-for="SaverAmount" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="SaverType" class="control-label">Choose The Save Type</label>
+            <select asp-for="SaverType" class="form-control">
+                <option value="">Select Type</option>
+                <option value="1">Increase</option>
+                <option value="2">Decrease</option>
+            </select>
+        </div>
+        
+        
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+</div>
+

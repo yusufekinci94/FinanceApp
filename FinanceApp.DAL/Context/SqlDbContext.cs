@@ -20,6 +20,7 @@ namespace FinanceApp.DAL.Context
         public DbSet<Entry> Entries { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Goal> Goals { get; set; }
+        public DbSet<Save> Saves { get; set; }
       
        
         public SqlDbContext()
