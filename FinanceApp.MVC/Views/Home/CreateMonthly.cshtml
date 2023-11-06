@@ -1,0 +1,124 @@
+﻿@{
+    ViewData["Title"] = "CreateMonthly";
+    Layout = "~/Views/Shared/new_layout.cshtml";
+}
+@model MonthlyDTO
+<div class="banner-overlay">
+    <div class="row" style="background: linear-gradient(to left, #7a60ff, #cd9ffa);">
+        <div class="col-1"></div>
+        <div class=" animated fadeInDown col-10">
+
+            <h3> Enter Your Monthly Action</h3>
+
+
+            <form asp-action="CreateMonthly" method="post">
+                <input type="hidden" asp-for="Status" value="true" />
+                
+                <div class="form-group">
+                    <label asp-for="Name">Name</label>
+                    <input asp-for="Name" style="width: 100px;" class="form-control" required />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Amount">Amount</label>
+                    <input asp-for="Amount" class="form-control" style="width: 100px; type="number" step="0.01" required />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PaymentDay">Payment Day</label>
+                    <input asp-for="PaymentDay" class="form-control" style="width: 100px; type="number" required  />
+                    <span asp-validation-for="PaymentDay" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Installment">How Many Months ?</label>
+                    <input asp-for="Installment" style="width: 100px;" class="form-control" required id="installment" />
+                    <span asp-validation-for="Installment" class="text-danger"></span>
+                </div>
+                <label for="newCategoryCheckbox2">Not Sure How Long</label>
+                <input type="checkbox" id="newCategoryCheckbox2" asp-for="@Model.checkBox2" />
+                @{
+                    IEnumerable<SelectListItem> selectListItems = null;
+                    if (Model.Categories != null)
+                    {
+                        var categoryNames = Model.Categories;
+                        var categoryList = categoryNames.Split(',').Select(item => item.Trim()).ToList();
+                        selectListItems = categoryList.Select(categoryName => new SelectListItem
+
+                {
+                    Text = categoryName,
+                    Value = categoryName
+                });
+                    }
+                }
+                <div class="from-group">
+                    <select asp-for="Categories" asp-items="selectListItems" multiple id="selectlist1"></select>
+                </div>
+                <label for="newCategoryCheckbox">If you want to add new Category click this</label>
+
+                <input type="checkbox" id="newCategoryCheckbox" asp-for="@Model.checkBox" />
+                <div id="newCategoryInputs" style="display: none;">
+                    <input type="text" id="newCategoryName" asp-for="@Model.categoryName" placeholder="New Category Name" />
+                    <input type="text" id="newCategoryDescription" asp-for="@Model.categoryDescription" placeholder="New Category Description" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Type">Type</label>
+                    <select class="form-select" asp-for="@Model.Type">
+                        <option selected>Choose a Type</option>
+                        <option value="1">Income</option>
+                        <option value="2">Outgoing</option>
+                    </select>
+
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="TypeMoney">Type of Money</label>
+                    <select class="form-select" asp-for="@Model.TypeMoney">
+                        <option selected>Choose the Money Type</option>
+                        <option value="1">Cash</option>
+                        <option value="2">Credit Card</option>
+                    </select>
+                    <span asp-validation-for="TypeMoney" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-danger">Save</button>
+            </form>
+
+
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+
+<script>
+    var newCategoryCheckbox = document.getElementById("newCategoryCheckbox");
+    var newCategoryCheckbox2 = document.getElementById("newCategoryCheckbox2");
+    var newCategoryInputs = document.getElementById("newCategoryInputs");
+    var selectList1 = document.getElementById("selectlist1");
+    var installment = document.getElementById("installment");
+    newCategoryCheckbox2.addEventListener("change", function () {
+        if (newCategoryCheckbox2.checked) {
+            installment.disabled =true;
+            installment.hidden = true;
+            installment.value=999999;
+           
+        } else {
+            installment.disabled =false;
+            installment.hidden = false;
+            installment.value = 0;
+        }
+    });
+
+    newCategoryCheckbox.addEventListener("change", function () {
+        if (newCategoryCheckbox.checked) {
+            newCategoryInputs.style.display = "block"; // Checkbox işaretlendiğinde inputları görüntüle
+            selectList1.disabled = true;
+        } else {
+            newCategoryInputs.style.display = "none"; // Checkbox işareti kaldırıldığında inputları gizle
+            selectList1.disabled = false;
+        }
+    });
+</script>

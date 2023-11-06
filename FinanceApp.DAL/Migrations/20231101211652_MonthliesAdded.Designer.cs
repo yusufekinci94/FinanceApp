@@ -4,6 +4,7 @@ using FinanceApp.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceApp.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231101211652_MonthliesAdded")]
+    partial class MonthliesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,7 +149,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 2, 1, 0, 45, 179, DateTimeKind.Local).AddTicks(3743));
+                        .HasDefaultValue(new DateTime(2023, 11, 2, 0, 16, 51, 893, DateTimeKind.Local).AddTicks(2313));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -188,7 +191,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 2, 1, 0, 45, 179, DateTimeKind.Local).AddTicks(6333));
+                        .HasDefaultValue(new DateTime(2023, 11, 2, 0, 16, 51, 893, DateTimeKind.Local).AddTicks(5116));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -261,18 +264,11 @@ namespace FinanceApp.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Categories")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Installment")
                         .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PaymentDay")
                         .HasColumnType("int");

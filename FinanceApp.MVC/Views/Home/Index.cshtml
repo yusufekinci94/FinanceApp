@@ -28,11 +28,11 @@
             {
                 TimeSpan? difference = Model.TargetDate - DateTime.Now;
                 var average = Model.TargetGoal / difference.Value.Days;
-
+                string formattedAverage = string.Format("{0:F2}", average);
                 <div class="container">
                     <div class="row"><h5>Target Goal: @Model.TargetGoal ₺</h5> </div>
                     <div class="row"><h5>Remaining Days To Your Goal: @difference.Value.Days</h5></div>
-                    <div class="row"><h5>Average amount of input you need to enter per day: @average ₺</h5></div>
+                    <div class="row"><h5>Average amount of input you need to enter per day: @formattedAverage ₺</h5></div>
 
                 </div>
             }

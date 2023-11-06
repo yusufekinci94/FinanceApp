@@ -13,9 +13,7 @@
 
     <div class="card-body">
         <form asp-action="index" asp-area="admin" method="post">
-            <div class="mb-3">
-                <h5><strong style="color: red;">@ViewBag.MessageSave</strong></h5>
-            </div>
+            
             <div class="mb-3">
                 <input type="hidden" asp-for="@Model.TargetStatus" />
                 <input type="hidden" asp-for="@Model.AppUserId" />
@@ -58,6 +56,9 @@
         </div>
         <br />
         <br />
+        <div class="mb-3">
+            <h5><strong style="color: red;">@ViewBag.MessageSave</strong></h5>
+        </div>
         <br />
         <div class="mb-3">
             <p>If you want to cancel saving progress click this</p>

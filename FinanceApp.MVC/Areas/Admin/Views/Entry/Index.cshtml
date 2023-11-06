@@ -28,7 +28,15 @@
                 <td>@item.Amount</td>
                 <td>@item.Description</td>
                 <td>@item.CreateDate</td>
-                <td>@item.Type </td>
+                @if (item.Type == Tip.Giris)
+                {
+                    <td>Income</td>
+                }
+                else
+                {
+                    <td>Outgoing</td>
+                }
+               
                 <td>@item.TypeMoney</td>
                 
                 <td>

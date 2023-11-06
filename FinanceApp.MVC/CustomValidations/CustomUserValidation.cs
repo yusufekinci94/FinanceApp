@@ -5,7 +5,19 @@ namespace FinanceApp.MVC.CustomValidations
 {
 	public class CustomUserValidation : IUserValidator<AppUser>
 	{
-		public Task<IdentityResult> ValidateAsync(UserManager<AppUser> manager, AppUser user)
+        private bool ContainsTurkishCharacters(string input)
+        {
+            string turkishCharacters = "ğĞüÜşŞıİöÖçÇ";
+            foreach (char c in input)
+            {
+                if (turkishCharacters.Contains(c))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public Task<IdentityResult> ValidateAsync(UserManager<AppUser> manager, AppUser user)
 		{
 			List<IdentityError> errors = new List<IdentityError>();
 
@@ -15,7 +27,7 @@ namespace FinanceApp.MVC.CustomValidations
 				errors.Add(new IdentityError { Code = "UserNameLength", Description = "Username must be between 3-25 characters" });
 			if (user.Email.Length > 70) // Emailin 70 karakterden fazla olmaması kontrolü
 				errors.Add(new IdentityError { Code = "EmailLength", Description = "E-mail Can not be longer than 70 characters" });
-            var existingUser = manager.FindByNameAsync(user.UserName).Result;
+			var existingUser = manager.FindByNameAsync(user.UserName).Result;
             if (existingUser != null && !string.Equals(existingUser.Id, user.Id))
             {
                 errors.Add(new IdentityError { Code = "DuplicateUsername", Description = "This username is already in use." });
@@ -25,7 +37,10 @@ namespace FinanceApp.MVC.CustomValidations
             {
                 errors.Add(new IdentityError { Code = "DuplicateEmail", Description = "This email is already in use." });
             }
-            
+            if (ContainsTurkishCharacters(user.UserName))
+                errors.Add(new IdentityError { Code = "TurkishCharactersInUsername", Description = "Username cannot contain Turkish characters" });
+            if (ContainsTurkishCharacters(user.Email))
+                errors.Add(new IdentityError { Code = "TurkishCharactersInEmail", Description = "E-mail address cannot contain Turkish characters" });
 
 
             if (!errors.Any())

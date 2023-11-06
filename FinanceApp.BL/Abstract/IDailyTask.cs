@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FinanceApp.BL.Abstract
 {
-    public interface IMonthlyTask
+    public interface IDailyTask
     {
         void Start();
     }

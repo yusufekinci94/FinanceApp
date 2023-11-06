@@ -4,6 +4,7 @@ using FinanceApp.Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 
 namespace FinanceApp.MVC.Areas.Admin.Controllers
@@ -27,6 +28,39 @@ namespace FinanceApp.MVC.Areas.Admin.Controllers
             var result = dbContext.Saves.Where(x => x.AppUserId == user).ToList();
             return View(result);
             
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            Save save = new Save();
+            save = dbContext.Saves.FirstOrDefault(x => x.Id == id);
+            var user = dbContext.Users.FirstOrDefault(x => x.Id == save.AppUserId);
+            var goal = dbContext.Goals.FirstOrDefault(x=>x.AppUserId==user.Id);
+           
+
+
+            if (user != null)
+            {
+                if (save.Type == Tip.Giris)
+                {
+                    goal.TargetGoal -= save.Amount;
+                    
+                }
+                else if (save.Type == Tip.Cikis)
+                {
+                    goal.TargetGoal += save.Amount;
+                }
+
+
+
+                dbContext.Goals.Update(goal);
+                dbContext.Saves.Remove(save);
+                dbContext.SaveChanges();
+
+                return RedirectToAction("index");
+            }
+
+            return RedirectToAction("index");
         }
     }
 }

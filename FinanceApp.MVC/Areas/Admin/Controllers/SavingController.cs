@@ -28,14 +28,28 @@ namespace FinanceApp.MVC.Areas.Admin.Controllers
         {
             var user = userManager.GetUserId(this.User);
             var result = dbContext.Goals.FirstOrDefault(x => x.AppUserId == user);
-            var viewModel = new GoalDTO
+            var viewModel = new GoalDTO();
+            if (result != null)
             {
-                AppUserId = result.AppUserId,
-                TargetDate = result.TargetDate,
-                TargetGoal = result.TargetGoal,
-                TargetStatus = result.TargetStatus,
-                Type = result.Type
+
+                viewModel.AppUserId = result.AppUserId;
+                viewModel.TargetDate = result.TargetDate;
+                viewModel.TargetGoal = result.TargetGoal;
+                viewModel.TargetStatus = result.TargetStatus;
+                viewModel.Type = result.Type;
             };
+
+            if (result == null)
+            {
+
+                {
+                    viewModel.AppUserId = user;
+                    viewModel.TargetDate = null;
+                    viewModel.TargetGoal = null;
+                    viewModel.TargetStatus = false;
+                    viewModel.Type = null;
+                };
+            }
             var userId = userManager.GetUserId(this.User);
             if (!dbContext.Saves.Where(x => x.AppUserId == userId).Any())
             {
@@ -45,7 +59,7 @@ namespace FinanceApp.MVC.Areas.Admin.Controllers
                     Amount = 0,
                     AppUserId = userId,
                     Type = Tip.Giris,
-                    Status=false
+                    Status = false
                 };
                 dbContext.Saves.Add(save);
                 dbContext.SaveChanges();
@@ -61,18 +75,35 @@ namespace FinanceApp.MVC.Areas.Admin.Controllers
             var goalentity = dbContext.Goals.FirstOrDefault(x => x.AppUserId == user);
             if (ModelState.IsValid)
             {
+                if(goalentity != null) {
+                    goalentity.UpdateDate = DateTime.Now;
+                    goalentity.TargetStatus = true;
+                    goalentity.TargetGoal = goalDTO.TargetGoal;
+                    goalentity.Type = goalDTO.Type;
+                    goalentity.TargetDate = goalDTO.TargetDate;
+                    dbContext.Goals.Update(goalentity);
+                    await dbContext.SaveChangesAsync();
+                    ViewBag.MessageSave = "Successfully Saved";
+                    return RedirectToAction("index");
+                }
+                if (goalentity == null)
+                {
+                    goalentity = new Goal();
+                    goalentity.AppUserId = user;
+                    goalentity.UpdateDate = DateTime.Now;
+                    goalentity.TargetStatus = true;
+                    goalentity.TargetGoal = goalDTO.TargetGoal;
+                    goalentity.Type = goalDTO.Type;
+                    goalentity.TargetDate = goalDTO.TargetDate;
+                    dbContext.Goals.Add(goalentity);
+                    await dbContext.SaveChangesAsync();
+                    ViewBag.MessageSave = "Successfully Saved";
+                    return RedirectToAction("index");
+                }
+
                 
-                goalentity.UpdateDate = DateTime.Now;
-                goalentity.TargetStatus = true;
-                goalentity.TargetGoal = goalDTO.TargetGoal;
-                goalentity.Type = goalDTO.Type;
-                goalentity.TargetDate = goalDTO.TargetDate;
-                dbContext.Goals.Update(goalentity);
-                await dbContext.SaveChangesAsync();
-                ViewBag.MessageSave = "";
-                return RedirectToAction("saver","home",new {area=""});
             }
-            
+
             return View(goalentity);
         }
         [HttpPost]
@@ -84,7 +115,7 @@ namespace FinanceApp.MVC.Areas.Admin.Controllers
             goalentity.UpdateDate = DateTime.Now;
             goalentity.TargetGoal = null;
             goalentity.Type = null;
-            goalentity.TargetDate= null;
+            goalentity.TargetDate = null;
             dbContext.Goals.Update(goalentity);
             await dbContext.SaveChangesAsync();
             return RedirectToAction("index");

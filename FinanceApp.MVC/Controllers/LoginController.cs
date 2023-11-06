@@ -15,9 +15,10 @@ namespace FinanceApp.MVC.Controllers
 	public class LoginController : Controller
 	{
 		private readonly UserManager<AppUser> userManager;
-		private readonly SignInManager<AppUser> signInManager;
-		private readonly RoleManager<IdentityRole> roleManager;
         private readonly SqlDbContext dbContext;
+        private readonly SignInManager<AppUser> signInManager;
+		private readonly RoleManager<IdentityRole> roleManager;
+       
 
 
 
@@ -165,6 +166,14 @@ namespace FinanceApp.MVC.Controllers
             };
 			mailMessage.To.Add(appUser.Email);
 			smtpClient.Send(mailMessage);
+            Goal goal = new Goal()
+            {
+                AppUserId = confirmModel.AppUserId,
+                TargetStatus = false
+
+            };
+            dbContext.Goals.Add(goal);
+            dbContext.SaveChanges();
             return View(confirmModel);
         }
         [HttpPost]
@@ -178,14 +187,7 @@ namespace FinanceApp.MVC.Controllers
 					user.EmailConfirmed = true;
 				}
 				dbContext.SaveChanges();
-				Goal goal = new Goal()
-				{
-					AppUserId = user.Id,
-					TargetStatus = false
-
-				};
-				dbContext.Goals.Add(goal);
-				dbContext.SaveChanges();
+				
 
 				return RedirectToAction("Login");
 			}

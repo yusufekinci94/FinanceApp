@@ -32,7 +32,9 @@ namespace FinanceApp.MVC
 			builder.Services.AddScoped<CategoryService>();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddTransient<CategoryService>();
-            builder.Services.AddSingleton<IMonthlyTask, MonthlyTask>();
+            builder.Services.AddSingleton<IDailyTask, DailyTask>();
+
+           
 
 
             builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
@@ -71,6 +73,8 @@ namespace FinanceApp.MVC
             });
             
             var app = builder.Build();
+            var dailyTask = app.Services.GetRequiredService<IDailyTask>();
+            dailyTask.Start();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

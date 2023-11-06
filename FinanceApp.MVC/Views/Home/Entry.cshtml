@@ -19,137 +19,158 @@
         var str = "";
     }
     var categoriesWithAppUserID = await categoryManager.GetAll(x => x.AppUserId == user.Id);
-    var itemsFromDatabase = dbContext.Categories.Where(x=>x.AppUserId==user.Id).Select(item => item.Name).ToList();
+    var itemsFromDatabase = dbContext.Categories.Where(x => x.AppUserId == user.Id).Select(item => item.Name).ToList();
     var selectListItems = itemsFromDatabase.Select(item => new SelectListItem { Text = item, Value = item }).ToList();
 }
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <div class="banner-overlay">
     <div class="row" style="background: linear-gradient(to left, #7a60ff, #cd9ffa);">
-        <div class="col-1"></div>
-        <div class=" animated fadeInDown col-10" >
-
-            <h3> Enter Your Action</h3>
-
-            <form method="post" asp-action="Entry">
-                <div>
-                    <label asp-for="@Model.name">Entry name</label>
-                    <input asp-for="@Model.name" required />
-                    <span asp-validation-for="@Model.name"></span>
-                </div>
-                <div>
-                    <label asp-for="@Model.Amount">Amount</label>
-                    <input asp-for="@Model.Amount" required type="number" step="0.01" />
-                    <span asp-validation-for="@Model.Amount"></span>
-                </div>
-                @*
-                <div>
-                Choose the Type of Entry: @Html.DropDownListFor(x=>x.Type,new [] {	new SelectListItem(){Text ="Income",Value="1"}, new SelectListItem(){Text ="Outgoing",Value="2"}}))
-                </div>
-                <div>
-                Choose the Type of Money: @Html.DropDownListFor(x=>x.TypeMoney,new [] {	new SelectListItem(){Text ="Income",Value="1"}, new SelectListItem(){Text ="Outgoing",Value="2"}}))
-                </div>
-                *@
-                <select class="form-select" asp-for="@Model.Type">
-                    <option selected>Choose a Type</option>
-                    <option value="1">Income</option>
-                    <option value="2">Outgoing</option>
-                </select>
-                <select class="form-select" asp-for="@Model.TypeMoney">
-                    <option selected>Choose the Money Type</option>
-                    <option value="1">Cash</option>
-                    <option value="2">Credit Card</option>
-                </select>
-                <div>
-                    <select asp-for="Categories" asp-items="selectListItems" multiple id="selectlist1"></select>
-                </div>
-
-                <br />
-                <label for="newCategoryCheckbox">If you want to add new Category click this</label>
-
-                <input type="checkbox" id="newCategoryCheckbox" asp-for="@Model.checkBox" />
-                <div id="newCategoryInputs" style="display: none;">
-                    <input type="text" id="newCategoryName" asp-for="@Model.categoryName" placeholder="New Category Name" />
-                    <input type="text" id="newCategoryDescription" asp-for="@Model.categoryDescription" placeholder="New Category Description" />
-                </div>
-                <div>
-                <input type="submit" value="Save" class="btn btn-danger">
-                </div>
-            </form>
+        <div class=" animated fadeInDown col-12" style="margin-left:10px;">
+            
             <div class="row">
-                <form method="post" asp-action="Cash">
-                    <div>
-                        <label asp-for="@Model.Cash">Enter Your Cash Amount (Not Required)</label>
-                        <input asp-for="@Model.Cash" type="number" step="0.01" />
-                        <span asp-validation-for="@Model.Cash"></span>
+                <div class="col-md-6">
+
+                    <h3> Enter Your Action</h3>
+                    <form method="post" asp-action="Entry">
+                        <div>
+                            <label asp-for="@Model.name">Entry name</label>
+                            <input asp-for="@Model.name" required />
+                            <span asp-validation-for="@Model.name"></span>
+                        </div>
+                        <div>
+                            <label asp-for="@Model.Amount">Amount</label>
+                            <input asp-for="@Model.Amount" required type="number" step="0.01" />
+                            <span asp-validation-for="@Model.Amount"></span>
+                        </div>
+                        @*
+                        <div>
+                        Choose the Type of Entry: @Html.DropDownListFor(x=>x.Type,new [] {	new SelectListItem(){Text ="Income",Value="1"}, new SelectListItem(){Text ="Outgoing",Value="2"}}))
+                        </div>
+                        <div>
+                        Choose the Type of Money: @Html.DropDownListFor(x=>x.TypeMoney,new [] {	new SelectListItem(){Text ="Income",Value="1"}, new SelectListItem(){Text ="Outgoing",Value="2"}}))
+                        </div>
+                        *@
+                        <select class="form-select" asp-for="@Model.Type">
+                            <option selected>Choose a Type</option>
+                            <option value="1">Income</option>
+                            <option value="2">Outgoing</option>
+                        </select>
+                        <select class="form-select" asp-for="@Model.TypeMoney">
+                            <option selected>Choose the Money Type</option>
+                            <option value="1">Cash</option>
+                            <option value="2">Credit Card</option>
+                        </select>
+                        <div>
+                            <select asp-for="Categories" asp-items="selectListItems" multiple id="selectlist1"></select>
+                        </div>
+
+                        <br />
+                        <label for="newCategoryCheckbox">If you want to add new Category click this</label>
+
+                        <input type="checkbox" id="newCategoryCheckbox" asp-for="@Model.checkBox" />
+                        <div id="newCategoryInputs" style="display: none;">
+                            <input type="text" id="newCategoryName" asp-for="@Model.categoryName" placeholder="New Category Name" />
+                            <input type="text" id="newCategoryDescription" asp-for="@Model.categoryDescription" placeholder="New Category Description" />
+                        </div>
+                        <div>
+                            <input type="submit" value="Save" class="btn btn-danger">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="row">
+                        <h4>Manually Enter Amounts Without Entries</h4>
+                        <form method="post" asp-action="Cash">
+                            <div>
+                                <label asp-for="@Model.Cash">Enter Your Cash Amount (Not Required)</label>
+                                <input asp-for="@Model.Cash" type="number" step="0.01" />
+                                <span asp-validation-for="@Model.Cash"></span>
+                            </div>
+                            <input type="submit" value="Add Cash" class="btn btn-danger">
+                        </form>
+                        <form method="post" asp-action="CashMinus">
+                            <div>
+                                <label asp-for="@Model.CashMinus">Enter Your Cash Amount (Not Required)</label>
+                                <input asp-for="@Model.CashMinus" type="number" step="0.01" />
+                                <span asp-validation-for="@Model.CashMinus"></span>
+                            </div>
+                            <input type="submit" value="Reduce Cash" class="btn btn-danger" style="margin:0 auto 0 auto">
+                        </form>
                     </div>
-                    <input type="submit" value="Add Cash" class="btn btn-danger">
-                </form>
-                <form method="post" asp-action="CashMinus">
-                    <div>
-                        <label asp-for="@Model.CashMinus">Enter Your Cash Amount (Not Required)</label>
-                        <input asp-for="@Model.CashMinus" type="number" step="0.01" />
-                        <span asp-validation-for="@Model.CashMinus"></span>
+                    <div class="row">
+
+                        <form method="post" asp-action="Credit">
+                            <div>
+                                <label asp-for="@Model.CreditDebt">Enter Your Credit Amount (Not Required)</label>
+                                <input asp-for="@Model.CreditDebt" type="number" step="0.01" />
+                                <span asp-validation-for="@Model.CreditDebt"></span>
+                            </div>
+                            <input type="submit" value="Add Credit Debt" class="btn btn-danger">
+                        </form>
+                        <form method="post" asp-action="CreditMinus">
+                            <div>
+                                <label asp-for="@Model.CreditDebtMinus">Enter Your Credit Amount (Not Required)</label>
+                                <input asp-for="@Model.CreditDebtMinus" type="number" step="0.01" />
+                                <span asp-validation-for="@Model.CreditDebtMinus"></span>
+                            </div>
+                            <input type="submit" value="Reduce Credit Debt" class="btn btn-danger">
+                        </form>
                     </div>
-                    <input type="submit" value="Reduce Cash" class="btn btn-danger" style="margin:0 auto 0 auto">
-                </form>
+                </div>
             </div>
-            <div class="row">
-
-                <form method="post" asp-action="Credit">
+            <div class="row" style="margin-left:5px;">
+                <form method="post" asp-action="BankAction">
                     <div>
-                        <label asp-for="@Model.CreditDebt">Enter Your Credit Amount (Not Required)</label>
-                        <input asp-for="@Model.CreditDebt" type="number" step="0.01" />
+                        <label asp-for="@Model.BankAction">Enter Your Amount (Not Required)</label>
+                        <input asp-for="@Model.BankAction" type="number" step="0.01" />
                         <span asp-validation-for="@Model.CreditDebt"></span>
                     </div>
-                    <input type="submit" value="Add Credit Debt" class="btn btn-danger">
-                </form>
-                <form method="post" asp-action="CreditMinus">
-                    <div>
-                        <label asp-for="@Model.CreditDebtMinus">Enter Your Credit Amount (Not Required)</label>
-                        <input asp-for="@Model.CreditDebtMinus" type="number" step="0.01" />
-                        <span asp-validation-for="@Model.CreditDebtMinus"></span>
-                    </div>
-                    <input type="submit" value="Reduce Credit Debt" class="btn btn-danger">
+                    <select class="form-select" asp-for="@Model.BankType">
+                        <option selected>Choose the Type of Transaction</option>
+                        <option value="1">Withdraw</option>
+                        <option value="2">Deposit</option>
+                    </select>
+                    <input type="submit" value="Transact" class="btn btn-danger">
                 </form>
             </div>
         </div>
-        <div class="col-1"></div>
     </div>
 </div>
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+    *@
 @*
-	@using (Html.BeginForm())
-	{
-	@Html.ValidationSummary()
-	{
-	<p>Entry Name:@Html.TextBoxFor(x=>x.name)</p>
-	<p>Entry Amount:@Html.TextBoxFor(x=>x.Amount)</p>
-	<p>
-	Choose the Type of Entry: @Html.DropDownListFor(x=>x.Type,new [] {
-	new SelectListItem(){Text ="Income",Value="1"},
-	new SelectListItem(){Text ="Outgoing",Value="2"}
+    @using (Html.BeginForm())
+    {
+    @Html.ValidationSummary()
+    {
+    <p>Entry Name:@Html.TextBoxFor(x=>x.name)</p>
+    <p>Entry Amount:@Html.TextBoxFor(x=>x.Amount)</p>
+    <p>
+    Choose the Type of Entry: @Html.DropDownListFor(x=>x.Type,new [] {
+    new SelectListItem(){Text ="Income",Value="1"},
+    new SelectListItem(){Text ="Outgoing",Value="2"}
 
-	},"Please Choose an Option")
-	</p>
-	<p>
-	Choose the Type of Balance: @Html.DropDownListFor(x=>x.TypeMoney,new [] {
-	new SelectListItem(){Text ="Cash",Value="1"},
-	new SelectListItem(){Text ="Credit Card",Value="2"}
+    },"Please Choose an Option")
+    </p>
+    <p>
+    Choose the Type of Balance: @Html.DropDownListFor(x=>x.TypeMoney,new [] {
+    new SelectListItem(){Text ="Cash",Value="1"},
+    new SelectListItem(){Text ="Credit Card",Value="2"}
 
-	},"Please Choose an Option")
-	</p>
-	<p>
-	Choose the Type of Balance: @Html.DropDownListFor(x=>x.Category,new [] {
-	new SelectListItem(){Text ="Cash",Value="1"},
+    },"Please Choose an Option")
+    </p>
+    <p>
+    Choose the Type of Balance: @Html.DropDownListFor(x=>x.Category,new [] {
+    new SelectListItem(){Text ="Cash",Value="1"},
 
-	},"Please Choose a Category")
-	</p>
-	}
-	<input type="submit" value="Save" class="btn btn-danger">
-	}
-	*@
+    },"Please Choose a Category")
+    </p>
+    }
+    <input type="submit" value="Save" class="btn btn-danger">
+    }
+    *@
 
 
 <script>

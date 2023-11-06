@@ -21,6 +21,7 @@ namespace FinanceApp.DAL.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Goal> Goals { get; set; }
         public DbSet<Save> Saves { get; set; }
+        public DbSet<Monthly> Monthlies { get; set; }
       
        
         public SqlDbContext()
@@ -55,10 +56,13 @@ namespace FinanceApp.DAL.Context
         }
         private string GetCurrentUserId()
         {
-            
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            return userId;
+            if (_httpContextAccessor?.HttpContext?.User?.Identity?.IsAuthenticated == true)
+            {
+                return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            }
+
+            return null; 
         }
     }
 }

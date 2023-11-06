@@ -3,40 +3,63 @@
     ViewData["Title"] = "Saver";
     Layout = "~/Views/Shared/new_layout.cshtml";
 }
+<div class="banner-overlay">
+    <div class="row" style="background: linear-gradient(to left, #7a60ff, #cd9ffa);">
+        <div class="container">
 
-<div class="container">
+            @{
+                TimeSpan? difference;
+                double? average;
+                string formattedAverage;
+                if (Model.TargetStatus == true)
+                {
+                    difference = Model.TargetDate - DateTime.Now;
+                    average = Model.TargetGoal / difference.Value.Days;
+                    formattedAverage = string.Format("{0:F2}", average);
+                }
+                else
+                {
+                    difference = null;
+                    formattedAverage = "";
+                }
+            }
+            <div class="container">
+                <div class="row"><h5>Target Goal: @Model.TargetGoal ₺</h5> </div>
+                @if (Model.TargetStatus == true)
+                {
+                    <div class="row"><h5>Remaining Days To Your Goal: @difference.Value.Days</h5></div>
+                    <div class="row"><h5>Average amount of input you need to enter per day: @formattedAverage ₺</h5></div>
+                }
+                else
+                {
+                    <div class="row"><h5>Remaining Days To Your Goal: 0₺</h5></div>
+                    <div class="row"><h5>Average amount of input you need to enter per day: 0 ₺</h5></div>
+                }
 
-    @{
-        TimeSpan? difference = Model.TargetDate - DateTime.Now;
-        var average = Model.TargetGoal / difference.Value.Days;
-    }
-    <div class="container">
-        <div class="row"><h5>Target Goal: @Model.TargetGoal ₺</h5> </div>
-        <div class="row"><h5>Remaining Days To Your Goal: @difference.Value.Days</h5></div>
-        <div class="row"><h5>Average amount of input you need to enter per day: @average ₺</h5></div>
 
+            </div>
+
+            <form asp-action="Saver" method="post">
+                <div>
+                    <input type="hidden" asp-for="@Model.AppUserId" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaverAmount" class="control-label">Enter The Save Amount</label>
+                    <input asp-for="SaverAmount" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaverType" class="control-label">Choose The Save Type</label>
+                    <select asp-for="SaverType" class="form-control">
+                        <option value="">Select Type</option>
+                        <option value="1">Increase</option>
+                        <option value="2">Decrease</option>
+                    </select>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+
+        </div>
     </div>
-    
-    <form asp-action="Saver" method="post">
-        <div>
-            <input type="hidden" asp-for="@Model.AppUserId" />
-        </div>
-        <div class="form-group">
-            <label asp-for="SaverAmount" class="control-label">Enter The Save Amount</label>
-            <input asp-for="SaverAmount" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label asp-for="SaverType" class="control-label">Choose The Save Type</label>
-            <select asp-for="SaverType" class="form-control">
-                <option value="">Select Type</option>
-                <option value="1">Increase</option>
-                <option value="2">Decrease</option>
-            </select>
-        </div>
-        
-        
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
-
 </div>
-

@@ -55,11 +55,17 @@
     <title>Applight Template By W3 Template</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
     <link href="~/applight/css/animate.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="~/applight/style.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+@*    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+*@    <link href="~/Applight/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <!-- Font Google -->
-
+    <style>
+  .dikdortgen {
+    border: 2px solid #000; /* Kalınlık ve renk ayarları */
+    padding: 10px; /* İçerik ile çizgi arasındaki mesafe */
+  }
+</style>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -69,7 +75,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand navbar-logo" href="#"> <img src="~/Applight/images/logo.png" alt="logo" class="logo-1"> </a>
+            <a class="navbar-brand navbar-logo" asp-action="index" asp-controller="home"> <img src="~/Applight/images/logo.png" alt="logo" class="logo-1"> </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="fas fa-bars"></span> </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
@@ -78,10 +84,19 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item"> <a class="nav-link" asp-action="entry" asp-controller="home" data-scroll-nav="0">Enter Entry</a> </li>
-                        <li class="nav-item"> <a class="nav-link" asp-action="createcategory" asp-controller="home" data-scroll-nav="0">Enter Category</a> </li>
-                        <li class="nav-item"> <a class="nav-link" asp-action="saver" asp-controller="home" data-scroll-nav="0">Enter Saving</a> </li>
-                        <li class="nav-item"> <a class="nav-link" asp-action="index" asp-controller="home" asp-area="admin" data-scroll-nav="6">Hosgeldiniz @User.Identity.Name</a> </li>
+                        <li class="nav-item"> <a class="nav-link" asp-action="index" asp-controller="progress" data-scroll-nav="6">Progress</a> </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="enterDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Enter
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="enterDropdown">
+                                <a class="dropdown-item" asp-action="entry" style="color:black" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'" asp-controller="home" data-scroll-nav="0">Enter Entry</a>
+                                <a class="dropdown-item" asp-action="createcategory" style="color:black" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'" asp-controller="home" data-scroll-nav="0">Enter Category</a>
+                                <a class="dropdown-item" asp-action="createmonthly" style="color:black" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'" asp-controller="home" data-scroll-nav="0">Enter Monthly Action</a>
+                                <a class="dropdown-item" asp-action="saver" style="color:black" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'" asp-controller="home" data-scroll-nav="0">Enter Saving</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"> <a class="nav-link" asp-action="index" asp-controller="home" asp-area="admin" data-scroll-nav="6"> Personel Panel For:@User.Identity.Name</a> </li>
                         <li class="nav-item"> <a class="nav-link" asp-action="Logout" asp-controller="Login" data-scroll-nav="6">Logout</a> </li>
 
                     }
@@ -101,7 +116,7 @@
     <section class="banner" data-scroll-index='0'>
         <div class="banner-overlay">
             <div class="container">
-                <div class="row">
+@*                <div class="row">
                     <div class="col-md-8 col-sm-12">
                         <div class="banner-text">
                             <h2 class="white">Best App Website Template</h2>
@@ -116,10 +131,11 @@
                     </div>
                     <div class="col-md-4 col-sm-12"> <img src="~/applight/images/iphone-screen.png" class="img-fluid wow fadeInUp" /> </div>
                 </div>
-            </div>
+*@            </div>
         </div>
-        <span class="svg-wave"> <img class="svg-hero" src="~/applight/images/applight-wave.svg"> </span>
-    </section>
+@*        <span class="svg-wave"> <img class="svg-hero" src="~/applight/images/applight-wave.svg"> </span>
+*@    </section>
+
     @if (!User.Identity.IsAuthenticated)
     {
 
@@ -184,8 +200,7 @@
                 </div>
             </div>
         </section>
-        <!-------Video End------->
-        <!-------Features Start------->
+       
         @if (User.Identity.IsAuthenticated)
         {
             @await Html.PartialAsync("~/Views/Home/Entry.cshtml")
@@ -428,6 +443,72 @@
         @*        @await Html.PartialAsync("~/Views/Home/Entry.cshtml")
     @await Html.PartialAsync("~/Views/Home/CreateCategory.cshtml")
     *@        @RenderBody()
+        <footer>
+            <div class="footer-top">
+                <div class="container">
+                    <div class="footer-day-time">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <ul>
+                                    <li>Welcome</li>
+                                    <li>Online:24/7</li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="phone-no">
+                                    <a href="tel:+905342232517"><i class="fa fa-mobile" aria-hidden="true"></i>Call +905342232517</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+
+                            <h4>About us</h4>
+                            <p>This site was created by Yusuf Can Ekinci for Acunmedya Corp. You can reach him from the options on the side.</p>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <h4>Information</h4>
+                            <ul class="address1">
+                                <li><i class="fa fa-map-marker"></i>Istanbul/TURKEY</li>
+                                <li><i class="fa fa-envelope"></i><a href="mailto:novakiller94@gmail.com">novakiller94@gmail.com</a></li>
+                                <li><i class="fa fa-mobile" aria-hidden="true"></i> <a href="tel:+905342232517">+905342232517</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-4">
+                            <h4>Quick Links</h4>
+                            <ul class="address1">
+                                <li><i class="fa fa-terminal"></i><a asp-action="index" asp-controller="home" asp-area="" style="font-size: 20px;">Home</a></li>
+                                <li><i class="fa fa-terminal"></i><a asp-action="index" asp-controller="progress" asp-area="" style="font-size: 20px;">Progress</a></li>
+                                <li><i class="fa fa-terminal"></i><a asp-action="entry" asp-controller="home" asp-area="" style="font-size: 20px;">Enter Entry</a></li>
+                                <li><i class="fa fa-terminal"></i><a asp-action="saver" asp-controller="home" asp-area="" style="font-size: 20px;">Enter Save</a></li>
+                                <li><i class="fa fa-terminal"></i><a asp-action="index" asp-controller="home" asp-area="admin" style="font-size: 20px;">Personel Panel</a></li>
+                                                                
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <p class="copyright text-uppercase">
+                                Copyright © 2023
+                            </p>
+                        </div>
+                        <div class="col-sm-7">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
     }
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
@@ -471,11 +552,11 @@
                 navbar = $(".navbar");
 
             if (bodyScroll > 50) {
-                $('.navbar-logo img').attr('src', '/applight/images/logo-black.png');
+                $('.navbar-logo img').attr('src', '/Applight/images/logo-black.png');
                 navbar.addClass("nav-scroll");
 
             } else {
-                $('.navbar-logo img').attr('src', '/applight/images/logo.png');
+                $('.navbar-logo img').attr('src', '/Applight/images/logo.png');
                 navbar.removeClass("nav-scroll");
             }
 
@@ -485,10 +566,10 @@
                 navbar = $(".navbar");
 
             if (bodyScroll > 50) {
-                $('.navbar-logo img').attr('src', '/applight/images/logo-black.png');
+                $('.navbar-logo img').attr('src', '/Applight/images/logo-black.png');
                 navbar.addClass("nav-scroll");
             } else {
-                $('.navbar-logo img').attr('src', '/applight/images/logo-white.png');
+                $('.navbar-logo img').attr('src', '/Applight/images/logo.png');
                 navbar.removeClass("nav-scroll");
             }
 

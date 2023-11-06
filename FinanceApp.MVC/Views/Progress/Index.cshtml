@@ -1,0 +1,423 @@
+﻿@model ProgressDTO
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/new_layout.cshtml";
+}
+
+<h1>General Progress</h1>
+<div class="row dikdortgen" style="border-color:burlywood;border-width: 5px;">
+    <div class="row" style="margin-left:10px;">
+        <h3 style="color:red">Infos</h3>
+    </div>
+    <div class="row col-md-12" style="margin-left:10px;">
+        <div class="col-md-6 dikdortgen">
+            <h5 style="color:blue">@Model.User.UserName's Informations</h5>
+            <p>Balance:@Model.User.Balance₺</p>
+            <p>Cash:@Model.User.Cash₺</p>
+            <p>Credit Debt:@Model.User.CreditDebt₺</p>
+            <p>Total Income:@Model.User.TotalIncome₺</p>
+            <p>Total Outgoing:@Model.User.TotalOutgoing₺</p>
+        </div>
+        @{
+            DateTime targetDate;
+            TimeSpan remainingTime;
+            int remainingDays;
+            double average;
+            string formattedAverage;
+            if (@Model.Goal.TargetStatus == true)
+            {
+                var currentDate = DateTime.Now;
+                targetDate = Model.Goal.TargetDate.Value;
+                remainingTime = targetDate - DateTime.Now;
+                remainingDays = (int)remainingTime.TotalDays;
+                average = Model.Goal.TargetGoal.Value / remainingDays;
+                formattedAverage = string.Format("{0:F2}", average);
+            }else
+            {
+                targetDate = DateTime.Now;
+                remainingTime = targetDate-DateTime.Now;
+                remainingDays = 0;
+                average = 0;
+                formattedAverage = "";
+            }
+        }
+        
+        <div class="col-md-6 dikdortgen">
+            <h5 style="color:blue">Goal Information</h5>
+            <p>Targetted Goal:@Model.Goal.TargetGoal₺</p>
+
+            <p>Targetted Date:@Model.Goal.TargetDate.Value.ToString("dd-MM-yyyy")</p>
+
+            <p>Remaining Days: @remainingDays days</p>
+
+            <p>To Achieve Your Goal, You Must Save @formattedAverage ₺ Daily</p>
+
+
+        </div>
+        
+    </div>
+</div>
+<div class="row dikdortgen" style="border-color:burlywood;border-width: 5px;">
+    <div class="row" style="margin-left:10px;">
+        <h3 style="color:red">Repeating Outgoings Under 200₺ and Same Category</h3>
+    </div>
+    <div class="dikdortgen col-md-11" style="margin:auto">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+
+                    <th>Entry Amount</th>
+                    <th>Entry Description</th>
+                    <th>Entry Create Date</th>
+                    <th>Entry Type</th>
+                    <th>Entry Type of Money</th>
+                    <th>Entry Categories</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.RepeatingOutgoings)
+                {
+                    <tr>
+
+                        <td>@item.Amount</td>
+                        <td>@item.Description</td>
+                        <td>@item.CreateDate</td>
+                        <td>Outgoing</td>
+
+                        <td>@item.TypeMoney</td>
+
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.CategoryIds))
+                            {
+                                var categoryIds = item.CategoryIds.Split(',');
+                                var categoryNames = new List<string>();
+
+                                foreach (var categoryId in categoryIds)
+                                {
+
+                                    var categoryName = categoryId;
+                                    categoryNames.Add(categoryName);
+
+                                }
+
+                                @string.Join(", ", categoryNames)
+
+                            }
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+<div class="row dikdortgen" style="border-color:burlywood;border-width: 5px;">
+    <div class="col-md-4">
+        <h3 style="color:red">Entries</h3>
+        @foreach (var itemx in Model.categories)
+        {
+            <div class="dikdortgen">
+                <h5 style="color:blue">Category:@itemx</h5>
+                <h6>Income</h6>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+
+                            <th>Entry Amount</th>
+                            <th>Entry Description</th>
+                            <th>Entry Create Date</th>
+                            <th>Entry Type</th>
+                            <th>Entry Type of Money</th>
+                            <th>Entry Categories</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Entries)
+                        {
+                            if (item.CategoryIds == itemx)
+                            {
+                                if (item.Type == Tip.Giris)
+                                {
+                                    <tr>
+
+                                        <td>@item.Amount</td>
+                                        <td>@item.Description</td>
+                                        <td>@item.CreateDate</td>
+                                        <td>Income</td>
+                                        <td>@item.TypeMoney</td>
+
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(item.CategoryIds))
+                                            {
+                                                var categoryIds = item.CategoryIds.Split(',');
+                                                var categoryNames = new List<string>();
+
+                                                foreach (var categoryId in categoryIds)
+                                                {
+
+                                                    var categoryName = categoryId;
+                                                    categoryNames.Add(categoryName);
+
+                                                }
+
+                                                @string.Join(", ", categoryNames)
+
+                                            }
+                                        </td>
+
+
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+
+                </table>
+                <h6>Outgoing</h6>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+
+                            <th>Entry Amount</th>
+                            <th>Entry Description</th>
+                            <th>Entry Create Date</th>
+                            <th>Entry Type</th>
+                            <th>Entry Type of Money</th>
+                            <th>Entry Categories</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Entries)
+                        {
+                            if (item.CategoryIds == itemx)
+                            {
+                                if (item.Type == Tip.Cikis)
+                                {
+                                    <tr>
+
+                                        <td>@item.Amount</td>
+                                        <td>@item.Description</td>
+                                        <td>@item.CreateDate</td>
+                                        <td>Outgoing </td>
+                                        <td>@item.TypeMoney</td>
+
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(item.CategoryIds))
+                                            {
+                                                var categoryIds = item.CategoryIds.Split(',');
+                                                var categoryNames = new List<string>();
+
+                                                foreach (var categoryId in categoryIds)
+                                                {
+
+                                                    var categoryName = categoryId;
+                                                    categoryNames.Add(categoryName);
+
+                                                }
+
+                                                @string.Join(", ", categoryNames)
+
+                                            }
+                                        </td>
+
+
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+            <br />
+        }
+
+    </div>
+    <div class="col-md-4">
+        <h3 style="color:red">Monthly Actions</h3>
+        <div class="dikdortgen">
+            <h4 style="color:blue"><strong>Those whose installment number is unknown</strong></h4>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Create Date</th>
+                        <th>Action's Type</th>
+                        <th>Remaining Installments</th>
+                        <th>Payment Day</th>
+                        <th>Categories</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Monthlies)
+                    {
+                        if (item.Status == true && item.Installment > 9999)
+                        {
+                            <tr>
+                                <td>@item.Amount</td>
+                                <td>@item.CreateDate</td>
+                                @if (@item.Type == Tip.Giris)
+                                {
+                                    <td>Income</td>
+                                }
+                                else
+                                {
+                                    <td>Outgoing</td>
+                                }
+
+                                <td>Infinite</td>
+                                <td>@item.PaymentDay</td>
+                                <td>@item.Categories</td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+        <div class="dikdortgen">
+            <h4 style="color:blue"><strong>Those whose installment number is limited</strong></h4>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Create Date</th>
+                        <th>Action's Type</th>
+                        <th>Remaining Installments</th>
+                        <th>Payment Day</th>
+                        <th>Categories</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Monthlies)
+                    {
+                        if (item.Status == true && item.Installment < 9999 && item.Installment > 0)
+                        {
+                            <tr>
+                                <td>@item.Amount</td>
+                                <td>@item.CreateDate</td>
+                                @if (@item.Type == Tip.Giris)
+                                {
+                                    <td>Income</td>
+                                }
+                                else
+                                {
+                                    <td>Outgoing</td>
+                                }
+
+                                <td>@item.Installment</td>
+                                <td>@item.PaymentDay</td>
+                                <td>@item.Categories</td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+        <div class="dikdortgen">
+            <h4 style="color:blue"><strong>Finished Actions</strong></h4>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Create Date</th>
+                        <th>Action's Type</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>Payment Day</th>
+                        <th>Categories</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Monthlies)
+                    {
+                        if (item.Status == true && item.Installment == 0)
+                        {
+                            <tr>
+                                <td>@item.Amount</td>
+                                <td>@item.CreateDate</td>
+                                @if (@item.Type == Tip.Giris)
+                                {
+                                    <td>Income</td>
+                                }
+                                else
+                                {
+                                    <td>Outgoing</td>
+                                }
+
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>@item.PaymentDay</td>
+                                <td>@item.Categories</td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h3 style="color:red">Saves</h3>
+        <div class="dikdortgen">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Save Amount</th>
+                        <th>Save Create Date</th>
+                        <th>Save Type</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Saves)
+                    {
+                        if (item.Status == true)
+                        {
+                            <tr>
+                                <td>@item.Amount</td>
+                                <td>@item.CreateDate</td>
+                                @if (@item.Type == Tip.Giris)
+                                {
+                                    <td>Increase</td>
+                                }
+                                else
+                                {
+                                    <td>Decrease</td>
+                                }
+
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
