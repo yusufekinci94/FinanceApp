@@ -14,7 +14,7 @@ namespace FinanceApp.MVC
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -75,6 +75,17 @@ namespace FinanceApp.MVC
             var app = builder.Build();
             var dailyTask = app.Services.GetRequiredService<IDailyTask>();
             dailyTask.Start();
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                var role = "Admin";
+
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -100,6 +111,7 @@ namespace FinanceApp.MVC
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            
 
             app.Run();
         }
