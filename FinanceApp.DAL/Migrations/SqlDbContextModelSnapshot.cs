@@ -146,7 +146,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 7, 15, 3, 24, 863, DateTimeKind.Local).AddTicks(7607));
+                        .HasDefaultValue(new DateTime(2023, 11, 7, 23, 23, 23, 682, DateTimeKind.Local).AddTicks(8017));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -188,7 +188,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 7, 15, 3, 24, 864, DateTimeKind.Local).AddTicks(3691));
+                        .HasDefaultValue(new DateTime(2023, 11, 7, 23, 23, 23, 683, DateTimeKind.Local).AddTicks(1360));
 
                     b.Property<string>("Description")
                         .IsRequired()

@@ -33,7 +33,7 @@ namespace FinanceApp.DAL.Context
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server = (localdb)\\MSSQLLocalDB;Database=FinansDb; Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(@"Data Source=104.247.167.130\MSSQLSERVER2017;User ID=yusufca5_financeapp;Password=rL6z321%v;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

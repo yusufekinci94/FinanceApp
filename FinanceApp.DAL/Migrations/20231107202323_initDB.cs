@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FinanceApp.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class initDb : Migration
+    public partial class initDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,6 +38,8 @@ namespace FinanceApp.DAL.Migrations
                     Cash = table.Column<double>(type: "float", nullable: true),
                     CreditCardInterest = table.Column<double>(type: "float", nullable: true),
                     CreditPayDay = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    HasExecutedForThisMonth = table.Column<bool>(type: "bit", nullable: false),
+                    DeadLineExecute = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -56,6 +58,66 @@ namespace FinanceApp.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Goals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AppUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TargetGoal = table.Column<double>(type: "float", nullable: true),
+                    TargetDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Type = table.Column<byte>(type: "tinyint", nullable: true),
+                    TargetStatus = table.Column<bool>(type: "bit", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Goals", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Monthlies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Amount = table.Column<double>(type: "float", nullable: false),
+                    PaymentDay = table.Column<int>(type: "int", nullable: false),
+                    Installment = table.Column<int>(type: "int", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    Type = table.Column<byte>(type: "tinyint", nullable: false),
+                    TypeMoney = table.Column<byte>(type: "tinyint", nullable: false),
+                    Categories = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Monthlies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Saves",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AppUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<byte>(type: "tinyint", nullable: false),
+                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Saves", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -173,7 +235,7 @@ namespace FinanceApp.DAL.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 26, 20, 22, 48, 164, DateTimeKind.Local).AddTicks(4262)),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 11, 7, 23, 23, 23, 682, DateTimeKind.Local).AddTicks(8017)),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -198,7 +260,7 @@ namespace FinanceApp.DAL.Migrations
                     TypeMoney = table.Column<byte>(type: "tinyint", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CategoryIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 26, 20, 22, 48, 164, DateTimeKind.Local).AddTicks(8125)),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 11, 7, 23, 23, 23, 683, DateTimeKind.Local).AddTicks(1360)),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -311,6 +373,15 @@ namespace FinanceApp.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "CategoryEntry");
+
+            migrationBuilder.DropTable(
+                name: "Goals");
+
+            migrationBuilder.DropTable(
+                name: "Monthlies");
+
+            migrationBuilder.DropTable(
+                name: "Saves");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -24,13 +24,15 @@
             int remainingDays;
             double average;
             string formattedAverage;
+            double goal;
             if (@Model.Goal.TargetStatus == true)
             {
                 var currentDate = DateTime.Now;
                 targetDate = Model.Goal.TargetDate.Value;
                 remainingTime = targetDate - DateTime.Now;
                 remainingDays = (int)remainingTime.TotalDays;
-                average = Model.Goal.TargetGoal.Value / remainingDays;
+                goal = Model.Goal.TargetGoal.Value;
+                average = goal / remainingDays;
                 formattedAverage = string.Format("{0:F2}", average);
             }else
             {
@@ -39,14 +41,15 @@
                 remainingDays = 0;
                 average = 0;
                 formattedAverage = "";
+                goal = 0;
             }
         }
         
         <div class="col-md-6 dikdortgen">
             <h5 style="color:blue">Goal Information</h5>
-            <p>Targetted Goal:@Model.Goal.TargetGoal₺</p>
+            <p>Targetted Goal:@goal₺</p>
 
-            <p>Targetted Date:@Model.Goal.TargetDate.Value.ToString("dd-MM-yyyy")</p>
+            <p>Targetted Date:@targetDate.ToString("dd-MM-yyyy")</p>
 
             <p>Remaining Days: @remainingDays days</p>
 

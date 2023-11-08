@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceApp.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20231101211652_MonthliesAdded")]
-    partial class MonthliesAdded
+    [Migration("20231107202323_initDB")]
+    partial class initDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -149,7 +149,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 2, 0, 16, 51, 893, DateTimeKind.Local).AddTicks(2313));
+                        .HasDefaultValue(new DateTime(2023, 11, 7, 23, 23, 23, 682, DateTimeKind.Local).AddTicks(8017));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -191,7 +191,7 @@ namespace FinanceApp.DAL.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 2, 0, 16, 51, 893, DateTimeKind.Local).AddTicks(5116));
+                        .HasDefaultValue(new DateTime(2023, 11, 7, 23, 23, 23, 683, DateTimeKind.Local).AddTicks(1360));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -264,11 +264,18 @@ namespace FinanceApp.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Categories")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Installment")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PaymentDay")
                         .HasColumnType("int");
